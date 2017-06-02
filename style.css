@@ -1,0 +1,258 @@
+body {
+	font-family: 'latoregular';
+	box-sizing: border-box;
+}
+
+.landingWrapper {
+	height: 100vh;
+	background-color: #EEE;
+}
+
+.landing {
+	max-width: 100vw;
+	min-height: 100vh;
+	padding: 12px;
+	text-align: center;
+	background-image: url("buffon.jpg");
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-attachment: fixed;
+	display: flex;
+    	justify-content: center;
+    	align-items: center;
+    	flex-direction: column;
+	-moz-box-shadow: inset 0 0 10em #000000;  
+ 	-webkit-box-shadow: inset 0 0 10em #000000;   
+ 	box-shadow: inset 0 0 10em #000000;
+}
+
+.banner {
+	display: inline-block;
+	width: 100%;
+	max-width: 1000px;
+	color: #181818;
+}
+
+.topBar-fixed {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+}
+
+.nav {
+	padding-left: 8px;
+	padding-right: 8px;
+	margin-bottom: 10px;
+	background-color: white;
+	position: relative;
+	border-radius: 1px;
+	box-shadow: 0 0 2px #181818;
+	text-align: left;
+}
+
+.logo {
+	padding-left: 4px;
+	padding-right: 4px;
+	margin-right: 30px;
+	height: 22px;
+	line-height: 22px;
+	background-color: #181818;
+	color: white;
+}
+
+.tabs {
+	display: inline-flex;
+}
+
+.tab {
+	display: inline-block;
+	width: 124px;
+	height: 24px;
+	line-height: 24px;
+	text-align: center;
+	margin-top: 4px;
+	margin-bottom: 4px;
+	cursor: pointer;
+	text-decoration: none;
+	color: #181818;
+}
+
+.tab:hover > .tabInner {
+	background-color: #181818;
+	color: white;
+}
+
+.tab-active > .tabInner {
+	background-color: #181818;
+	color: white;
+	cursor: default;
+}
+
+.tab + .tab {
+	border-left: 2px dashed #181818;
+}
+
+.tabInner {
+	margin-left: 4px;
+	margin-right: 4px;
+}
+
+.tabIcon {
+	padding-right: 4px;
+}
+
+.fa-gbp:before {
+	font-size: larger;
+	position: relative;
+	top: 2px;
+}
+
+.fa-pencil-square-o:before {
+	font-size: larger;
+	position: relative;
+	top: 3px;
+}
+
+.twitterIcon {
+	position: absolute;
+	right: 8px;
+	transform: translateY(50%);
+	color: #4099ff;
+	cursor: pointer;
+	text-decoration: none;
+}
+
+.twitterIcon:hover {
+	color: #181818;
+}
+
+.search {
+	height: 26px;
+	line-height: 26px;
+	vertical-align: middle;
+	background-color: white;
+	color: #181818;
+	padding-left: 8px;
+	padding-right: 8px;
+	margin-left: 50px;
+	margin-right: 50px;
+	border-radius: 12px;
+	box-shadow: 0 0 2px #181818;
+	text-align: left;
+}
+
+.search-compact {
+	display: inline-block;
+	margin-top: -5px;
+	width: 300px;
+}
+
+.searchField {
+	padding: 0;
+	border: 0;
+	margin: 0;
+}
+
+.scroll {
+	cursor: pointer;
+	color: #181818;
+	text-decoration: none;
+}
+
+.scroll:hover {
+	color: white;
+}
+
+.horizontalSeperator {
+	height: 22px;
+	background-color: #DDDDDD;
+	background-image: repeating-linear-gradient(315deg, transparent, transparent 35px, rgba(255,255,255,.5) 35px, rgba(255,255,255,.5) 70px);
+	border-top: 1px solid white;
+	border-bottom: 1px solid white;
+}
+
+.verticalSeperator {
+	width: 1px;
+	background-color: white;
+}
+
+.verticalSeperator-left {
+	margin-right: auto;
+}
+
+.verticalSeperator-right {
+	margin-left: auto;
+}
+
+.main {
+	display: flex;
+	background-color: #EEEEEE;
+}
+
+.ads {
+	flex-shrink: 0;
+	margin-left: auto;
+	margin-right: auto;
+	flex-basis: 160px;
+}
+
+.ad {
+	width: 160px;
+	height: 600px;
+	margin: 20px;
+	background-color: white;
+	box-shadow: 0 0 2px #181818;
+	border-radius: 1px;
+}
+
+.twitterWrapper {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.twitter {
+	min-width: 300px;
+	max-width: 300px;
+	height: 1220px;
+	margin: 20px;
+	box-shadow: 0 0 2px #181818;
+	flex-grow: 1;
+	border-radius: 1px;
+	overflow-y: auto;
+}
+
+.posts {
+	margin: 20px;
+	flex-basis: 1000px;
+	flex-grow: 0;
+}
+
+.post:nth-child(even) {
+	background-color: #F9F9F9;
+}
+
+.post {
+	background-color: white;
+	padding: 12px;
+	border-radius: 1px;
+	box-shadow: 0 0 2px #181818;
+}
+
+.post + .post {
+	margin-top: 20px;
+}
+
+.title {
+	font-size: 24px;
+	margin-right: 4px;
+}
+
+.date {
+	font-size: 10px;
+}
+
+.postContent {
+	margin-top: 4px;
+}
