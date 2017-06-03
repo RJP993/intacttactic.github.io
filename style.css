@@ -39,11 +39,13 @@ body {
 	top: 0;
 	left: 0;
 	right: 0;
+	z-index: 1;
 }
 
 .nav {
-	padding-left: 8px;
-	padding-right: 8px;
+	padding: 2px;
+	height: 32px;
+	display: flex;
 	margin-bottom: 10px;
 	background-color: white;
 	position: relative;
@@ -53,50 +55,45 @@ body {
 }
 
 .logo {
-	padding-left: 4px;
-	padding-right: 4px;
-	margin-right: 30px;
-	height: 22px;
-	line-height: 22px;
 	background-color: #181818;
 	color: white;
+	font-size: 18px;
+	width: 110px;
+	margin-right: 30px;
+	text-align: center;
+	line-height: 28px;
+	cursor: default;
 }
 
 .tabs {
-	display: inline-flex;
+	border-left: 1px solid #AAAAAA;
+	border-right: 1px solid #AAAAAA;
+	font-size: 0;
 }
 
 .tab {
 	display: inline-block;
-	width: 124px;
-	height: 24px;
-	line-height: 24px;
-	text-align: center;
-	margin-top: 4px;
-	margin-bottom: 4px;
 	cursor: pointer;
 	text-decoration: none;
 	color: #181818;
-}
-
-.tab:hover > .tabInner {
-	background-color: #181818;
-	color: white;
-}
-
-.tab-active > .tabInner {
-	background-color: #181818;
-	color: white;
-	cursor: default;
+	font-size: 18px;
+	line-height: 28px;
+	width: 150px;
+	text-align: center;
 }
 
 .tab + .tab {
-	border-left: 2px dashed #181818;
+	border-left: 1px solid #AAAAAA;
 }
 
-.tabInner {
-	margin-left: 4px;
-	margin-right: 4px;
+.tab:hover {
+	background-color: firebrick;
+	color: white;
+}
+
+.tab-active {
+	background-color: firebrick;
+	color: white;
 }
 
 .tabIcon {
@@ -117,20 +114,21 @@ body {
 
 .twitterIcon {
 	position: absolute;
+	top: 0;
 	right: 8px;
 	transform: translateY(50%);
-	color: #4099ff;
+	color: #131313;
 	cursor: pointer;
 	text-decoration: none;
 }
 
 .twitterIcon:hover {
-	color: #181818;
+	color: firebrick;
 }
 
 .search {
 	height: 26px;
-	line-height: 26px;
+	line-height: 24px;
 	vertical-align: middle;
 	background-color: white;
 	color: #181818;
@@ -144,25 +142,29 @@ body {
 }
 
 .search-compact {
-	display: inline-block;
-	margin-top: -5px;
-	width: 300px;
+	flex-grow: 1;
+	margin-left: 30px;
+	margin-right: 58px;
+	margin-top: 1px;
+	border: 1px #AAA solid;
+	box-shadow: 0 0;
 }
 
 .searchField {
 	padding: 0;
 	border: 0;
 	margin: 0;
+	width: 90%;
 }
 
 .scroll {
 	cursor: pointer;
-	color: #181818;
+	color: firebrick;
 	text-decoration: none;
 }
 
 .scroll:hover {
-	color: white;
+	color: #131313;
 }
 
 .horizontalSeperator {
@@ -203,7 +205,6 @@ body {
 	height: 600px;
 	margin: 20px;
 	background-color: white;
-	box-shadow: 0 0 2px #181818;
 	border-radius: 1px;
 }
 
@@ -217,10 +218,10 @@ body {
 	max-width: 300px;
 	height: 1220px;
 	margin: 20px;
-	box-shadow: 0 0 2px #181818;
 	flex-grow: 1;
 	border-radius: 1px;
 	overflow-y: auto;
+	background-color: white;
 }
 
 .posts {
@@ -229,30 +230,53 @@ body {
 	flex-grow: 0;
 }
 
-.post:nth-child(even) {
-	background-color: #F9F9F9;
-}
-
 .post {
-	background-color: white;
-	padding: 12px;
 	border-radius: 1px;
-	box-shadow: 0 0 2px #181818;
 }
 
 .post + .post {
-	margin-top: 20px;
+	margin-top: 40px;
+}
+
+.postHeader {
+	background-color: firebrick;
+	color: white;
+	padding: 12px;
+	position: relative;
+}
+
+.postBody {
+	padding: 20px;
+	background-color: white;
 }
 
 .title {
 	font-size: 24px;
-	margin-right: 4px;
 }
 
 .date {
-	font-size: 10px;
 }
 
-.postContent {
-	margin-top: 4px;
+.share {
+    	position: absolute;
+    	right: 12px;
+    	width: 62px;
+    	height: 50%;
+    	border-radius: 50px;
+    	text-align: center;
+    	top: 12px;
+    	padding-top: 2px;
+	border: 1px solid white;
+	cursor: pointer;
+}
+
+.share:hover {
+    	background-color: white;
+    	color: firebrick;
+}
+
+.header1 {
+}
+
+.header2 {
 }
