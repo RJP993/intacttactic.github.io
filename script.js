@@ -20,29 +20,35 @@ var landing = document.getElementsByClassName("landing")[0];
 var topBar = document.getElementsByClassName("topBar")[0];
 var nav = document.getElementsByClassName("nav")[0];
 var search = document.getElementsByClassName("search")[0];
-var twitterIcon = document.getElementsByClassName("twitterIcon")[0];
+var twitterIconWrapper = document.getElementsByClassName("twitterIconWrapper")[0];
 var anchor = document.getElementsByClassName("horizontalSeperator")[0];
 var scroll = document.getElementsByClassName("scroll")[0];
 var banner = document.getElementsByClassName("banner")[0];
-var isTopBarFixed = false;
+var logo = document.getElementsByClassName("logo")[0];
+var username = document.getElementsByClassName("username")[0];
+var isFixed = false;
 var preFixedTop = 0;
 window.addEventListener("scroll", function() {
-	var topBarTop = topBar.offsetTop;
-	if (!isTopBarFixed && topBarTop < window.pageYOffset) {
-		isTopBarFixed = true;
-		preFixedTop = topBarTop;
+	var navTop = nav.offsetTop;
+	if (!isFixed && navTop < window.pageYOffset) {
+		isFixed = true;
+		preFixedTop = navTop;
 		topBar.classList.add("topBar-fixed");
 		search.classList.add("search-compact");
-		nav.insertBefore(search, twitterIcon);
+		logo.classList.add("logo-compact");
+		nav.appendChild(search);
+		nav.appendChild(logo);
 		anchor.appendChild(topBar);
 		console.log("fixed");	
 	}
-	else if (isTopBarFixed && preFixedTop > window.pageYOffset) {
-		isTopBarFixed = false;
+	else if (isFixed && preFixedTop > window.pageYOffset) {
+		isFixed = false;
 		topBar.classList.remove("topBar-fixed");
 		search.classList.remove("search-compact");
+		logo.classList.remove("logo-compact");
 		topBar.appendChild(search);
 		banner.insertBefore(topBar, scroll);
+		topBar.insertBefore(logo, nav);
 		console.log("unfixed");
 	}
 

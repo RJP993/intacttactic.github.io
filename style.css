@@ -1,6 +1,7 @@
 body {
 	font-family: 'latoregular';
 	box-sizing: border-box;
+	color: #292f33;
 }
 
 .landingWrapper {
@@ -31,7 +32,7 @@ body {
 	display: inline-block;
 	width: 100%;
 	max-width: 1000px;
-	color: #181818;
+	color: #292f33;
 }
 
 .topBar-fixed {
@@ -47,53 +48,57 @@ body {
 	height: 32px;
 	display: flex;
 	margin-bottom: 10px;
-	background-color: white;
+	background-color: #fff;
 	position: relative;
 	border-radius: 1px;
-	box-shadow: 0 0 2px #181818;
+	box-shadow: 0 0 2px #292f33;
 	text-align: left;
 }
 
 .logo {
-	background-color: #181818;
-	color: white;
-	font-size: 18px;
-	width: 110px;
-	margin-right: 30px;
-	text-align: center;
-	line-height: 28px;
-	cursor: default;
+	background-image: url("logo.png");
+	height: 120px;
+   	width: 120px;
+    	background-size: contain;
+    	background-repeat: no-repeat;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 20px;
+	border-radius: 10px;
+	box-shadow: 0 0 2px #292f33;
 }
 
-.tabs {
-	border-left: 1px solid #AAAAAA;
-	border-right: 1px solid #AAAAAA;
-	font-size: 0;
+.logo-compact {
+	width: 28px;
+	height: 28px;
+	box-shadow: none;
+	margin-right: 6px;
 }
 
 .tab {
 	display: inline-block;
 	cursor: pointer;
 	text-decoration: none;
-	color: #181818;
+	color: #292f33;
 	font-size: 18px;
 	line-height: 28px;
-	width: 150px;
 	text-align: center;
+	flex-grow: 1;
+	flex-basis: 150px;
 }
 
 .tab + .tab {
-	border-left: 1px solid #AAAAAA;
+	border-left: 1px dashed #292f33;
 }
 
 .tab:hover {
-	background-color: firebrick;
-	color: white;
+	background-color: #b22222;
+	color: #fff;
 }
 
 .tab-active {
-	background-color: firebrick;
-	color: white;
+	background-color: #b22222;
+	color: #fff;
 }
 
 .tabIcon {
@@ -112,42 +117,55 @@ body {
 	top: 3px;
 }
 
-.twitterIcon {
-	position: absolute;
-	top: 0;
-	right: 8px;
-	transform: translateY(50%);
-	color: #131313;
+.twitterIconWrapper {
+	background-color: #292f33;
+	color: #fff;
 	cursor: pointer;
-	text-decoration: none;
+	text-decoration: none;	 
+	text-align: center;
+	width: 150px;
+	margin-right: 2px;
 }
 
-.twitterIcon:hover {
-	color: firebrick;
+.twitterIconWrapper:hover {
+	background-color: #b22222;
+}
+
+.username {
+	font-size: 18px;
+    	vertical-align: middle;
+    	line-height: 27px;
+    	display: inline-block;
+}
+
+.fa.twitterIcon {
+	line-height: 27px;
+	vertical-align: top;
 }
 
 .search {
 	height: 26px;
 	line-height: 24px;
 	vertical-align: middle;
-	background-color: white;
-	color: #181818;
+	background-color: #fff;
+	color: #292f33;
 	padding-left: 8px;
 	padding-right: 8px;
-	margin-left: 50px;
-	margin-right: 50px;
+	margin-left: 150px;
+	margin-right: 150px;
 	border-radius: 12px;
-	box-shadow: 0 0 2px #181818;
+	box-shadow: 0 0 2px #292f33;
 	text-align: left;
 }
 
 .search-compact {
 	flex-grow: 1;
-	margin-left: 30px;
-	margin-right: 58px;
+	margin-left: 10px;
+	margin-right: 10px;
 	margin-top: 1px;
-	border: 1px #AAA solid;
-	box-shadow: 0 0;
+	border: 1px #292f33 solid;
+	box-shadow: none;
+	border-radius: 0;
 }
 
 .searchField {
@@ -159,25 +177,26 @@ body {
 
 .scroll {
 	cursor: pointer;
-	color: firebrick;
 	text-decoration: none;
+	color: #fff;
+	text-shadow: 0 0 2px #292f33;
 }
 
 .scroll:hover {
-	color: #131313;
+	color: #b22222;
 }
 
 .horizontalSeperator {
 	height: 22px;
 	background-color: #DDDDDD;
 	background-image: repeating-linear-gradient(315deg, transparent, transparent 35px, rgba(255,255,255,.5) 35px, rgba(255,255,255,.5) 70px);
-	border-top: 1px solid white;
-	border-bottom: 1px solid white;
+	border-top: 1px solid #fff;
+	border-bottom: 1px solid #fff;
 }
 
 .verticalSeperator {
 	width: 1px;
-	background-color: white;
+	background-color: #fff;
 }
 
 .verticalSeperator-left {
@@ -204,7 +223,7 @@ body {
 	width: 160px;
 	height: 600px;
 	margin: 20px;
-	background-color: white;
+	background-color: #fff;
 	border-radius: 1px;
 }
 
@@ -221,7 +240,29 @@ body {
 	flex-grow: 1;
 	border-radius: 1px;
 	overflow-y: auto;
-	background-color: white;
+	background-color: #fff;
+}
+
+.twitterHeader {
+	background-color: #fff;
+	padding: 8px;
+	position: relative;
+}
+
+.twitterTweets {
+	font-size: 20px;
+}
+
+.twitterBy {
+	font-size: 12px;
+	padding-left: 2px;
+	padding-right: 2px;
+}
+
+.twitterUser {
+	color: #b22222;
+	text-decoration: none;
+	cursor: pointer;
 }
 
 .posts {
@@ -232,22 +273,41 @@ body {
 
 .post {
 	border-radius: 1px;
+	max-height: 300px;
+	overflow-y: hidden;
 }
 
 .post + .post {
-	margin-top: 40px;
+	margin-top: 50px;
+}
+
+.postFooter + .post {
+	margin-top: 50px;
 }
 
 .postHeader {
-	background-color: firebrick;
-	color: white;
+	background-color: #b22222;
+	color: #fff;
 	padding: 12px;
 	position: relative;
 }
 
 .postBody {
 	padding: 20px;
-	background-color: white;
+	background-color: #fff;
+}
+
+.postFooter {
+	background-color: #292f33;
+    	color: #fff;
+    	padding: 10px;
+    	position: relative;
+    	text-align: center;
+	cursor: pointer;
+}
+
+.postFooter:hover {
+	background-color: #b22222;
 }
 
 .title {
@@ -266,13 +326,13 @@ body {
     	text-align: center;
     	top: 12px;
     	padding-top: 2px;
-	border: 1px solid white;
+	border: 1px solid #fff;
 	cursor: pointer;
 }
 
 .share:hover {
-    	background-color: white;
-    	color: firebrick;
+    	background-color: #fff;
+    	color: #b22222;
 }
 
 .header1 {
