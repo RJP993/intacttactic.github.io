@@ -27,6 +27,8 @@ var scroll = document.getElementsByClassName("scroll")[0];
 var banner = document.getElementsByClassName("banner")[0];
 var logo = document.getElementsByClassName("logo")[0];
 var twitterIcon = document.getElementsByClassName("twitterIcon")[0];
+var twitterIconWrapper = document.getElementsByClassName("twitterIconWrapper")[0];
+var searchWrapper = document.getElementsByClassName("searchWrapper")[0];
 var isFixed = false;
 var preFixedTop = 0;
 window.addEventListener("scroll", function() {
@@ -38,8 +40,11 @@ window.addEventListener("scroll", function() {
 		topBar.classList.add("topBar-compact");
 		search.classList.add("search-compact");
 		logo.classList.add("logo-compact");
-		nav.insertBefore(search, twitterIcon);
-		nav.insertBefore(logo, firstTab);
+		twitterIconWrapper.classList.add("twitterIconWrapper-fixed");
+		searchWrapper.classList.add("searchWrapper-fixed");
+		searchWrapper.appendChild(logo);
+		searchWrapper.appendChild(search);
+		twitterIconWrapper.appendChild(twitterIcon);
 		anchor.appendChild(topBarWrapper);
 		console.log("fixed");	
 	}
@@ -49,9 +54,12 @@ window.addEventListener("scroll", function() {
 		topBar.classList.remove("topBar-compact");
 		search.classList.remove("search-compact");
 		logo.classList.remove("logo-compact");
+		twitterIconWrapper.classList.remove("twitterIconWrapper-fixed");
+		searchWrapper.classList.remove("searchWrapper-fixed");
 		topBarWrapper.appendChild(search);
+		topBarWrapper.insertBefore(logo, topBar);
+		nav.appendChild(twitterIcon);
 		banner.insertBefore(topBarWrapper, scroll);
-		topBar.insertBefore(logo, nav);
 		console.log("unfixed");
 	}
 

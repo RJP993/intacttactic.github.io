@@ -16,7 +16,6 @@ body {
 	text-align: center;
 	background-image: url("buffon.jpg");
 	background-size: cover;
-	background-repeat: no-repeat;
 	background-position: center center;
 	background-attachment: fixed;
 	display: flex;
@@ -46,8 +45,9 @@ body {
 
 .topBar-compact {
 	max-width: 1200px;
-    	display: inline-block;
+    	display: inline-flex;
     	width: 100%;
+	justify-content: center;
 }
 
 .nav {
@@ -60,7 +60,8 @@ body {
 	border-radius: 1px;
 	box-shadow: 0 0 2px #292f33;
 	text-align: left;
-	display: flex;
+	display: inline-flex;
+	vertical-align: center;
 }
 
 .topBar-compact > .nav {
@@ -87,9 +88,10 @@ body {
 	width: 28px;
 	height: 28px;
 	box-shadow: none;
-	margin-right: 2px;
+	margin-right: 0;
+	margin-left: 0;
 	border-radius: 0;
-	border: 1px solid #292f33;
+	display: inline-block;
 }
 
 .tab {
@@ -100,12 +102,11 @@ body {
 	font-size: 18px;
 	line-height: 28px;
 	text-align: center;
-	flex-grow: 1;
-	flex-basis: 150px;
+	width: 150px;
 }
 
 .tab + .tab {
-	border-left: 1px dashed #292f33;
+	margin-left: 2px;
 }
 
 .tab:hover {
@@ -144,10 +145,24 @@ body {
 	color: white;
 	cursor: pointer;
 	text-decoration: none;
+	margin-left: 2px;
 }
 
 .fa.twitterIcon:hover {
 	background-color: #b22222;
+}
+
+.twitterIconWrapper-fixed {
+	border-radius: 1px;
+    	box-shadow: 0 0 2px #292f33;
+    	margin-bottom: 10px;
+    	padding: 2px;
+    	height: 32px;
+    	background-color: #fff;
+}
+
+.twitterIconWrapper-fixed > .fa.twitterIcon {
+	margin-left: 0;
 }
 
 .search {
@@ -169,11 +184,12 @@ body {
 	flex-grow: 1;
 	margin-left: 2px;
 	margin-right: 2px;
-	border: 1px #292f33 solid;
 	box-shadow: none;
 	border-radius: 0;
 	height: 28px;
 	line height: 26px;
+	display: inline-block;
+	vertical-align: top;
 }
 
 .searchField {
@@ -181,6 +197,18 @@ body {
 	border: 0;
 	margin: 0;
 	width: 90%;
+}
+
+.searchWrapper-fixed {
+	border-radius: 1px;
+    	box-shadow: 0 0 2px #292f33;
+    	margin-bottom: 10px;
+    	padding: 2px;
+    	height: 32px;
+    	background-color: #fff;
+	margin-left: 20px;
+	width: 260px;
+	margin-right: 20px;
 }
 
 .scroll {
