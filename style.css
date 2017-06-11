@@ -34,6 +34,10 @@ body {
 	color: #292f33;
 }
 
+.topBarWrapper {
+	font-size: 0; /* Removes an annoying whitespace, might be best to do this on the body and be more specific with font sizes */
+}
+
 .topBarWrapper-fixed {
 	position: fixed;
 	top: 0;
@@ -75,9 +79,7 @@ body {
    	width: 120px;
     	background-size: contain;
     	background-repeat: no-repeat;
-	margin-left: auto;
-	margin-right: auto;
-	margin-bottom: 20px;
+	margin-right: 8px;
 	border-radius: 10px;
 	box-shadow: 0 0 2px #292f33;
 	display: inline-block;
@@ -92,6 +94,12 @@ body {
 	margin-left: 0;
 	border-radius: 0;
 	display: inline-block;
+}
+
+.rightSideWrapper {
+	display: inline-block;
+	vertical-align: middle;
+	font-size: 18px;
 }
 
 .tab {
@@ -173,9 +181,7 @@ body {
 	color: #292f33;
 	padding-left: 8px;
 	padding-right: 8px;
-	margin-left: 150px;
 	margin-right: 150px;
-	border-radius: 12px;
 	box-shadow: 0 0 2px #292f33;
 	text-align: left;
 }
@@ -211,11 +217,15 @@ body {
 	margin-right: 20px;
 }
 
-.scroll {
+.fa.scroll {
 	cursor: pointer;
 	text-decoration: none;
 	color: #fff;
 	text-shadow: 0 0 2px #292f33;
+    	position: absolute;
+    	transform: translateX(-50%);
+	top: 62%;
+	font-size: 8em;
 }
 
 .scroll:hover {

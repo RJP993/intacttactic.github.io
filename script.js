@@ -29,6 +29,7 @@ var logo = document.getElementsByClassName("logo")[0];
 var twitterIcon = document.getElementsByClassName("twitterIcon")[0];
 var twitterIconWrapper = document.getElementsByClassName("twitterIconWrapper")[0];
 var searchWrapper = document.getElementsByClassName("searchWrapper")[0];
+var rightSideWrapper = document.getElementsByClassName("rightSideWrapper")[0];
 var isFixed = false;
 var preFixedTop = 0;
 window.addEventListener("scroll", function() {
@@ -56,8 +57,8 @@ window.addEventListener("scroll", function() {
 		logo.classList.remove("logo-compact");
 		twitterIconWrapper.classList.remove("twitterIconWrapper-fixed");
 		searchWrapper.classList.remove("searchWrapper-fixed");
-		topBarWrapper.appendChild(search);
-		topBarWrapper.insertBefore(logo, topBar);
+		rightSideWrapper.appendChild(search);
+		topBarWrapper.insertBefore(logo, rightSideWrapper);
 		nav.appendChild(twitterIcon);
 		banner.insertBefore(topBarWrapper, scroll);
 		console.log("unfixed");
