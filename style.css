@@ -1,6 +1,7 @@
 body {
-	font-family: 'latoregular';
 	box-sizing: border-box;
+	font-family: 'latoregular';
+	font-size: 0;
 	color: #292f33;
 }
 
@@ -10,32 +11,14 @@ body {
 }
 
 .landing {
-	max-width: 100vw;
-	min-height: 100vh;
-	padding: 12px;
-	text-align: center;
-	background-image: url("buffon.jpg");
-	background-size: cover;
-	background-position: center center;
-	background-attachment: fixed;
 	display: flex;
+	min-height: 100vh;
     	justify-content: center;
     	align-items: center;
-    	flex-direction: column;
-	-moz-box-shadow: inset 0 0 10em #000000;  
- 	-webkit-box-shadow: inset 0 0 10em #000000;   
- 	box-shadow: inset 0 0 10em #000000;
-}
-
-.banner {
-	display: inline-block;
-	width: 100%;
-	max-width: 1000px;
-	color: #292f33;
-}
-
-.topBarWrapper {
-	font-size: 0; /* Removes an annoying whitespace, might be best to do this on the body and be more specific with font sizes */
+	text-align: center;
+	padding: 12px;
+	background: url("buffon.jpg") center center / cover no-repeat fixed;
+ 	box-shadow: inset 0 0 160px #000000;
 }
 
 .topBarWrapper-fixed {
@@ -47,53 +30,26 @@ body {
 	text-align: center;
 }
 
-.topBar-compact {
-	max-width: 1200px;
-    	display: inline-flex;
-    	width: 100%;
-	justify-content: center;
-}
-
-.nav {
-	padding: 2px;
-	height: 32px;
-	display: flex;
-	margin-bottom: 10px;
-	background-color: #fff;
-	position: relative;
-	border-radius: 1px;
-	box-shadow: 0 0 2px #292f33;
-	text-align: left;
-	display: inline-flex;
-	vertical-align: center;
-}
-
-.topBar-compact > .nav {
-	display: flex;
-	width: auto;
-}
-
 .logo {
-	background-image: url("logo.png");
-	height: 120px;
+	display: inline-block;
    	width: 120px;
+	height: 120px;
+	margin-right: 8px;
+	vertical-align: middle;
+	background-image: url("logo.png");
     	background-size: contain;
     	background-repeat: no-repeat;
-	margin-right: 8px;
 	border-radius: 10px;
 	box-shadow: 0 0 2px #292f33;
-	display: inline-block;
-	vertical-align: middle;
 }
 
-.logo-compact {
+.topBarWrapper-fixed > .rightSideWrapper > .topBar > .searchWrapper > .logo {
+	display: inline-block;
 	width: 28px;
 	height: 28px;
-	box-shadow: none;
 	margin-right: 0;
-	margin-left: 0;
 	border-radius: 0;
-	display: inline-block;
+	box-shadow: none;
 }
 
 .rightSideWrapper {
@@ -102,39 +58,42 @@ body {
 	font-size: 18px;
 }
 
+.topBarWrapper-fixed > .rightSideWrapper > .topBar {
+    	display: inline-flex;
+}
+
+.nav {
+	display: flex;
+	margin-bottom: 10px;
+	padding: 2px;
+	background-color: #fff;
+	border-radius: 1px;
+	box-shadow: 0 0 2px #292f33;
+}
+
 .tab {
-	display: inline-block;
-	cursor: pointer;
 	text-decoration: none;
 	color: #292f33;
-	font-size: 18px;
 	line-height: 28px;
-	text-align: center;
 	width: 150px;
+}
+
+.tab:hover {
+	color: #fff;
+	background-color: #b22222;
+}
+
+.tab-active {
+	color: #fff;
+	background-color: #b22222;
 }
 
 .tab + .tab {
 	margin-left: 2px;
 }
 
-.tab:hover {
-	background-color: #b22222;
-	color: #fff;
-}
-
-.tab-active {
-	background-color: #b22222;
-	color: #fff;
-}
-
 .tabIcon {
 	padding-right: 4px;
-}
-
-.fa-gbp:before {
-	font-size: larger;
-	position: relative;
-	top: 2px;
 }
 
 .fa-pencil-square-o:before {
@@ -143,89 +102,79 @@ body {
 	top: 3px;
 }
 
+.fa-gbp:before {
+	font-size: larger;
+	position: relative;
+	top: 2px;
+}
+
 .fa.twitterIcon {
-	line-height: 28px;
-	vertical-align: middle;
-	display: inline-block;
 	width: 28px;
-	text-align: center;
-	background-color: #292f33;
-	color: white;
-	cursor: pointer;
-	text-decoration: none;
+	line-height: 28px;
 	margin-left: 2px;
+	color: white;
+	background-color: #292f33;
+	text-decoration: none;
+	cursor: pointer;
 }
 
 .fa.twitterIcon:hover {
 	background-color: #b22222;
 }
 
-.twitterIconWrapper-fixed {
-	border-radius: 1px;
-    	box-shadow: 0 0 2px #292f33;
-    	margin-bottom: 10px;
-    	padding: 2px;
-    	height: 32px;
-    	background-color: #fff;
+.topBarWrapper-fixed > .rightSideWrapper > .topBar > .twitterIconWrapper > .fa.twitterIcon {
+	margin-left: 0;
 }
 
-.twitterIconWrapper-fixed > .fa.twitterIcon {
-	margin-left: 0;
+.topBarWrapper-fixed > .rightSideWrapper > .topBar > .searchWrapper {
+	width: 260px;
+    	height: 32px;
+	margin-left: 20px;
+	margin-right: 20px;
+    	padding: 2px;
+    	background-color: #fff;
+	border-radius: 1px;
+    	box-shadow: 0 0 2px #292f33;
+}
+
+.topBarWrapper-fixed > .rightSideWrapper > .topBar > .twitterIconWrapper {
+    	height: 32px;
+    	padding: 2px;
+    	background-color: #fff;
+	border-radius: 1px;
+    	box-shadow: 0 0 2px #292f33;
 }
 
 .search {
 	height: 26px;
 	line-height: 24px;
-	vertical-align: middle;
-	background-color: #fff;
-	color: #292f33;
+	margin-right: 150px;
 	padding-left: 8px;
 	padding-right: 8px;
-	margin-right: 150px;
-	box-shadow: 0 0 2px #292f33;
 	text-align: left;
+	background-color: #fff;
+	box-shadow: 0 0 2px #292f33;
 }
 
-.search-compact {
-	flex-grow: 1;
+.topBarWrapper-fixed > .rightSideWrapper > .topBar > .searchWrapper > .search {
+	display: inline-block;
 	margin-left: 2px;
 	margin-right: 2px;
 	box-shadow: none;
-	border-radius: 0;
-	height: 28px;
-	line height: 26px;
-	display: inline-block;
-	vertical-align: top;
 }
 
 .searchField {
-	padding: 0;
 	border: 0;
-	margin: 0;
-	width: 89%;
-}
-
-.searchWrapper-fixed {
-	border-radius: 1px;
-    	box-shadow: 0 0 2px #292f33;
-    	margin-bottom: 10px;
-    	padding: 2px;
-    	height: 32px;
-    	background-color: #fff;
-	margin-left: 20px;
-	width: 260px;
-	margin-right: 20px;
 }
 
 .fa.scroll {
-	cursor: pointer;
-	text-decoration: none;
+    	position: absolute;
+	top: 62%;
+	font-size: 120px;
 	color: #fff;
 	text-shadow: 0 0 2px #292f33;
-    	position: absolute;
-    	transform: translateX(-50%);
-	top: 62%;
-	font-size: 8em;
+	text-decoration: none;
+	cursor: pointer;
 }
 
 .scroll:hover {
@@ -234,10 +183,10 @@ body {
 
 .horizontalSeperator {
 	height: 22px;
-	background-color: #DDDDDD;
-	background-image: repeating-linear-gradient(315deg, transparent, transparent 35px, rgba(255,255,255,.5) 35px, rgba(255,255,255,.5) 70px);
 	border-top: 1px solid #fff;
 	border-bottom: 1px solid #fff;
+	background-color: #ddd;
+	background-image: repeating-linear-gradient(315deg, transparent, transparent 35px, rgba(255,255,255,.5) 35px, rgba(255,255,255,.5) 70px);
 }
 
 .verticalSeperator {
@@ -253,46 +202,15 @@ body {
 	margin-left: auto;
 }
 
-.main {
-	display: flex;
-	background-color: #EEEEEE;
-}
-
-.ads {
-	flex-shrink: 0;
-	margin-left: auto;
-	margin-right: auto;
-	flex-basis: 160px;
-}
-
-.ad {
-	width: 160px;
-	height: 600px;
-	margin: 20px;
-	background-color: #fff;
-	border-radius: 1px;
-}
-
 .twitterWrapper {
 	margin-left: auto;
 	margin-right: auto;
 }
 
-.twitter {
-	min-width: 300px;
-	max-width: 300px;
-	height: 1220px;
-	margin: 20px;
-	flex-grow: 1;
-	border-radius: 1px;
-	overflow-y: auto;
-	background-color: #fff;
-}
-
 .twitterHeader {
-	background-color: #fff;
 	padding: 8px;
 	position: relative;
+	background-color: #fff;
 }
 
 .twitterTweets {
@@ -311,44 +229,72 @@ body {
 	cursor: pointer;
 }
 
-.posts {
+.twitter {
+	width: 300px;
+	height: 1220px;
 	margin: 20px;
+	background-color: #fff;
+}
+
+.main {
+	display: flex;
+	font-size: 16px;
+	background-color: #eee;
+}
+
+.posts {
 	flex-basis: 1000px;
-	flex-grow: 0;
+	margin: 20px;
 }
 
 .post {
-	border-radius: 1px;
 	max-height: 300px;
 	overflow-y: hidden;
+	border-radius: 1px;
 }
 
 .post + .post {
 	margin-top: 50px;
 }
 
-.postFooter + .post {
-	margin-top: 50px;
-}
-
 .postHeader {
-	background-color: #b22222;
-	color: #fff;
-	padding: 12px;
 	position: relative;
+	padding: 12px;
+	color: #fff;
+	background-color: #b22222;
 }
 
+.postHeaderTitle {
+	font-size: 24px;
+}
+
+.postHeaderShare {
+    	width: 62px;
+    	height: 50%;
+	border: 1px solid #fff;
+    	padding-top: 2px;
+    	position: absolute;
+    	top: 12px;
+    	right: 12px;
+    	text-align: center;
+    	border-radius: 50px;
+	cursor: pointer;
+}
+
+.postHeaderShare:hover {
+    	color: #b22222;
+    	background-color: #fff;
+}
 .postBody {
 	padding: 20px;
 	background-color: #fff;
 }
 
 .postFooter {
-	background-color: #292f33;
-    	color: #fff;
     	padding: 10px;
-    	position: relative;
     	text-align: center;
+    	color: #fff;
+	background-color: #292f33;
 	cursor: pointer;
 }
 
@@ -356,33 +302,20 @@ body {
 	background-color: #b22222;
 }
 
-.title {
-	font-size: 24px;
+.postFooter + .post {
+	margin-top: 50px;
 }
 
-.date {
+.ads {
+	flex-basis: 160px;
+	margin-left: auto;
+	margin-right: auto;
 }
 
-.share {
-    	position: absolute;
-    	right: 12px;
-    	width: 62px;
-    	height: 50%;
-    	border-radius: 50px;
-    	text-align: center;
-    	top: 12px;
-    	padding-top: 2px;
-	border: 1px solid #fff;
-	cursor: pointer;
-}
-
-.share:hover {
-    	background-color: #fff;
-    	color: #b22222;
-}
-
-.header1 {
-}
-
-.header2 {
+.ad {
+	width: 160px;
+	height: 600px;
+	margin: 20px;
+	background-color: #fff;
+	border-radius: 1px;
 }
