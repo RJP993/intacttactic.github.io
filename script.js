@@ -226,7 +226,7 @@ var Website = (function () {
     return Website;
 }());
 Website.LOCAL_SERVER = location.hostname === "localhost" || location.hostname === "127.0.0.1";
-Website.POSTS_DIRECTORY = Website.LOCAL_SERVER ? "/josh-website/posts/" : "/posts/";
+Website.POSTS_DIRECTORY = Website.LOCAL_SERVER ? "/josh-website/posts/" : "/intacttactic.github.io/posts/";
 Website.ACTIVE_TAB_CLASS = "tab-active";
 Website.FIXED_TOP_BAR_CLASS = "topBarWrapper-fixed";
 Website.POST_LOAD_COUNT = 5;

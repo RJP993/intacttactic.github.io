@@ -1,6 +1,6 @@
 class Website {
 	private static readonly LOCAL_SERVER = location.hostname === "localhost" || location.hostname === "127.0.0.1";
-	private static readonly POSTS_DIRECTORY = Website.LOCAL_SERVER ? "/josh-website/posts/" : "/posts/";
+	private static readonly POSTS_DIRECTORY = Website.LOCAL_SERVER ? "/josh-website/posts/" : "/intacttactic.github.io/posts/";
 	private static readonly ACTIVE_TAB_CLASS = "tab-active";
 	private static readonly FIXED_TOP_BAR_CLASS = "topBarWrapper-fixed";
 	private static readonly POST_LOAD_COUNT = 5;
