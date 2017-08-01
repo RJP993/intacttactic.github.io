@@ -17,7 +17,7 @@ body {
     	align-items: center;
 	text-align: center;
 	padding: 12px;
-	background: url("buffon.jpg") center center / cover no-repeat fixed;
+	background: url("../assets/buffon.jpg") center center / cover no-repeat fixed;
  	box-shadow: inset 0 0 160px #000000;
 }
 
@@ -44,7 +44,7 @@ body {
 	height: 120px;
 	margin-right: 8px;
 	vertical-align: middle;
-	background-image: url("logo.png");
+	background-image: url("../assets/logo.png");
     	background-size: contain;
     	background-repeat: no-repeat;
 	border-radius: 10px;
@@ -124,6 +124,10 @@ body {
 	background-color: #292f33;
 	text-decoration: none;
 	cursor: pointer;
+}
+
+.fa.twitterIcon-center:before {
+	padding-left: 1px;
 }
 
 .fa.twitterIcon:hover {
@@ -219,7 +223,7 @@ body {
 }
 
 .twitterHeader {
-	padding: 8px;
+	padding: 10px 10px 11px 10px;
 	position: relative;
 	background-color: #fff;
 }
@@ -259,17 +263,11 @@ body {
 }
 
 .post {
-	max-height: 260px;
-	overflow-y: hidden;
 	border-radius: 1px;
 }
 
 .post-expanded {
 	max-height: none;
-}
-
-.post + .post {
-	margin-top: 50px;
 }
 
 .postHeader {
@@ -361,6 +359,7 @@ body {
 }
 
 .postFooter {
+	margin-bottom: 50px;
     	padding: 10px;
     	text-align: center;
     	color: #fff;
@@ -374,6 +373,30 @@ body {
 
 .postFooter + .post {
 	margin-top: 50px;
+}
+
+.resultsFound {
+	margin-top: 50px;
+	text-align: center;
+}
+
+.pageIconContainer {
+	margin-top: -30px;
+	text-align: center;
+}
+
+.pageIcon {
+    	display: inline-block;
+	width: 30px;
+   	height: 30px;
+    	line-height: 30px;
+    	background-color: #b22222;
+    	color: #fff;
+	cursor: pointer;
+}
+
+.pageIcon + .pageIcon {
+	margin-left: 20px;
 }
 
 .ads {
