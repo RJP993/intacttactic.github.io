@@ -3,10 +3,10 @@ class PostObject {
 	html: string;
 }
 
-class PostManager {
+class PostArea {
 	private static readonly LOCAL_SERVER = location.hostname === "localhost" || location.hostname === "127.0.0.1";
-	private static readonly PREVIEWS_DIRECTORY = PostManager.LOCAL_SERVER ? "/josh-website/assets/previews/" : "/assets/previews/";
-	private static readonly POSTS_DIRECTORY = PostManager.LOCAL_SERVER ? "/josh-website/assets/posts/" : "/assets/posts/";
+	private static readonly PREVIEWS_DIRECTORY = PostArea.LOCAL_SERVER ? "/josh-website/assets/previews/" : "/assets/previews/";
+	private static readonly POSTS_DIRECTORY = PostArea.LOCAL_SERVER ? "/josh-website/assets/posts/" : "/assets/posts/";
 	private static readonly ACTIVE_TAB_CLASS = "tab-active";
 	private static readonly FIXED_TOP_BAR_CLASS = "topBarWrapper-fixed";
 	private static readonly POST_LOAD_COUNT = 5;
@@ -16,6 +16,7 @@ class PostManager {
 	private pageIconContainer = document.getElementsByClassName("pageIconContainer")[0];
 	private postContainers: HTMLElement[] = [];
 	private postsLoadingIcon = new LoadingIcon(this.posts as HTMLElement);
+	private activePageIndex = 0;
 
 	private previewsLoadedCount = 0;
 	private previewsToLoadCount: number;
@@ -27,7 +28,7 @@ class PostManager {
 	private previewsInMemory: PostObject[] = [];
 
 	constructor() {
-		for (let i = 0; i < PostManager.POST_LOAD_COUNT; i++) {
+		for (let i = 0; i < PostArea.POST_LOAD_COUNT; i++) {
 			const container = document.createElement("div");
 			container.classList.add("postContainer");
 			this.posts.insertBefore(container, this.pageIconContainer);
@@ -42,10 +43,17 @@ class PostManager {
 	public load(skipPreLoad = false, startIndex = 0): void {
 		this.emptyPage();
 		this.postsLoadingIcon.append();
+		
+		const pageIcons = this.pageIconContainer.children;
+		if (pageIcons.length > 0) {
+			this.pageIconContainer.children[this.activePageIndex].classList.remove("pageIcon-active");
+		}
 
 		if (!skipPreLoad) {
+			this.activePageIndex = 0;
 			this.preLoad();
 		}
+
 
 		if (this.matches && this.matches.length > 0) {
 			this.requestContent(startIndex);
@@ -55,9 +63,8 @@ class PostManager {
 	}
 
 	private emptyPage(): void {
-		const postContainers = document.getElementsByClassName("postContainer");
-		for (let i = 0; i < postContainers.length; i++) {
-			postContainers[i].innerHTML = "";
+		for (let i = 0; i < this.postContainers.length; i++) {
+			this.postContainers[i].innerHTML = "";
 			this.previewsLoadedCount = 0;
 			this.loadedPreviews = [];
 		}
@@ -68,7 +75,7 @@ class PostManager {
 
 	private preLoad(): void {
 		const rawPreviewsToLoadCount = this.rawPreviewsToLoadCount = this.postsData.length;
-		this.previewsToLoadCount = rawPreviewsToLoadCount >= PostManager.POST_LOAD_COUNT ? PostManager.POST_LOAD_COUNT : rawPreviewsToLoadCount;
+		this.previewsToLoadCount = rawPreviewsToLoadCount >= PostArea.POST_LOAD_COUNT ? PostArea.POST_LOAD_COUNT : rawPreviewsToLoadCount;
 
 		const rawSearchTerm = window.location.search.substring(1).toLowerCase();
 		const searchTerms = rawSearchTerm.split("%20");
@@ -111,7 +118,7 @@ class PostManager {
 	}
 
 	private requestContent(startIndex: number): void {
-		for (let i = startIndex; i < startIndex + PostManager.POST_LOAD_COUNT; i++) {
+		for (let i = startIndex; i < startIndex + PostArea.POST_LOAD_COUNT; i++) {
 			if (!this.matches[i]) {
 				return;
 			}
@@ -127,7 +134,7 @@ class PostManager {
 			if (previewFoundInMemory) {
 				this.loadPreviews(previewFoundInMemory.html, i, i - startIndex);
 			} else {
-				this.httpRequest(PostManager.PREVIEWS_DIRECTORY + this.matches[i], (response: string) => this.loadPreviews(response, i, i - startIndex, this.matches[i]));
+				this.httpRequest(PostArea.PREVIEWS_DIRECTORY + this.matches[i], (response: string) => this.loadPreviews(response, i, i - startIndex, this.matches[i]));
 			}
 		}
 	}
@@ -164,7 +171,7 @@ class PostManager {
 		this.postsLoadingIcon.remove();
 
 		for (const loadedPreview of this.loadedPreviews) {
-			this.postContainers[loadedPreview.i].appendChild(loadedPreview.element);
+			this.postContainers[this.postContainers.length - 1 - loadedPreview.i].appendChild(loadedPreview.element);
 		}
 
 		const footers = document.getElementsByClassName("postFooter");
@@ -177,25 +184,41 @@ class PostManager {
 		for (let i = 0; i < links.length; i++) {
 			const linkElement = links[i] as HTMLElement;
 			linkElement.addEventListener("click", () => {
-				const hiddenInputElement = linkElement.parentElement.lastElementChild as HTMLInputElement;
+				const hiddenInputElement = linkElement.parentElement.parentElement.lastElementChild as HTMLInputElement;
 				hiddenInputElement.classList.remove("hidden");
 				hiddenInputElement.select();
 				document.execCommand("copy");
 				hiddenInputElement.classList.add("hidden");
+
+				const text = linkElement.firstElementChild;
+				text.classList.add("hidden");
+
+				const tick = linkElement.lastElementChild;
+				tick.classList.remove("hidden");
+				setTimeout(() => {
+					text.classList.remove("hidden");
+					tick.classList.add("hidden");
+				}, 1000);
 			});
 		}
 
 		const rawPreviewCount = (window.location.search && window.location.search !== "") ? this.matches.length : this.rawPreviewsToLoadCount; 
-		const pagesRequiredCount = Math.ceil(rawPreviewCount / PostManager.POST_LOAD_COUNT);
+		const pagesRequiredCount = Math.ceil(rawPreviewCount / PostArea.POST_LOAD_COUNT);
 		for (let i = 0; i < pagesRequiredCount; i++) {
 			const pageIcon = document.createElement("span");
 			pageIcon.classList.add("pageIcon");
 			pageIcon.innerText = (i + 1).toString();
 			this.pageIconContainer.appendChild(pageIcon);
 
-			pageIcon.addEventListener("click", (e: Event) => {
+			if (i === this.activePageIndex) {
+				pageIcon.classList.add("pageIcon-active");
+			}
+
+			pageIcon.addEventListener("click", (e: Event) => { 
 				const clickedNumber = (e.target as HTMLElement).innerText;
-				this.load(true, (+clickedNumber - 1) * PostManager.POST_LOAD_COUNT);
+				
+				this.activePageIndex = +clickedNumber - 1;
+				this.load(true, this.activePageIndex * PostArea.POST_LOAD_COUNT);
 			});
 		}
 	}
@@ -209,7 +232,7 @@ class PostManager {
 			footerElement.innerText = "Read Less";
 
 			if (postContent.innerHTML === "") {
-				this.httpRequest(PostManager.POSTS_DIRECTORY + this.matches[postIndex], (response: string) => this.loadPostContent(response, postContent));
+				this.httpRequest(PostArea.POSTS_DIRECTORY + this.matches[postIndex], (response: string) => this.loadPostContent(response, postContent));
 			} else {
 				postContent.classList.remove("hidden");
 			}

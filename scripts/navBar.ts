@@ -1,4 +1,4 @@
-class TabManager {
+class NavBar {
 	private tabs = document.getElementsByClassName("tab");
 	private allTab = this.tabs[0];
 	private writeupsTab = this.tabs[1];
@@ -8,7 +8,7 @@ class TabManager {
 	
 	private horizontalSeperator = document.getElementsByClassName("horizontalSeperator")[0];
 	
-	private postManager = new PostManager();
+	private postArea = new PostArea();
 
 	constructor() {
 		for (let i = 0; i < this.tabs.length; i++) {
@@ -50,7 +50,7 @@ class TabManager {
 			postsData = Posts.BETTING;
 		}
 
-		this.postManager.setPostsData(postsData);
-		this.postManager.load();	
+		this.postArea.setPostsData(postsData);
+		this.postArea.load();	
 	}	
 }

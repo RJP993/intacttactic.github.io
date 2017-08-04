@@ -8,8 +8,8 @@
 		"posts.ts",
 		"browser.ts",
 		"loadingIcon.ts",
-		"postManager.ts",
-		"tabManager.ts",
+		"postArea.ts",
+		"navBar.ts",
 		"searchBar.ts",
 		"topBar.ts",
 		"script.ts"

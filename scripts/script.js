@@ -66,31 +66,37 @@ var PostObject = (function () {
     }
     return PostObject;
 }());
-var PostManager = (function () {
-    function PostManager() {
+var PostArea = (function () {
+    function PostArea() {
         this.posts = document.getElementsByClassName("posts")[0];
         this.resultsFound = document.getElementsByClassName("resultsFound")[0];
         this.pageIconContainer = document.getElementsByClassName("pageIconContainer")[0];
         this.postContainers = [];
         this.postsLoadingIcon = new LoadingIcon(this.posts);
+        this.activePageIndex = 0;
         this.previewsLoadedCount = 0;
         this.previewsInMemory = [];
-        for (var i = 0; i < PostManager.POST_LOAD_COUNT; i++) {
+        for (var i = 0; i < PostArea.POST_LOAD_COUNT; i++) {
             var container = document.createElement("div");
             container.classList.add("postContainer");
             this.posts.insertBefore(container, this.pageIconContainer);
             this.postContainers.push(container);
         }
     }
-    PostManager.prototype.setPostsData = function (postsData) {
+    PostArea.prototype.setPostsData = function (postsData) {
         this.postsData = postsData;
     };
-    PostManager.prototype.load = function (skipPreLoad, startIndex) {
+    PostArea.prototype.load = function (skipPreLoad, startIndex) {
         if (skipPreLoad === void 0) { skipPreLoad = false; }
         if (startIndex === void 0) { startIndex = 0; }
         this.emptyPage();
         this.postsLoadingIcon.append();
+        var pageIcons = this.pageIconContainer.children;
+        if (pageIcons.length > 0) {
+            this.pageIconContainer.children[this.activePageIndex].classList.remove("pageIcon-active");
+        }
         if (!skipPreLoad) {
+            this.activePageIndex = 0;
             this.preLoad();
         }
         if (this.matches && this.matches.length > 0) {
@@ -100,19 +106,18 @@ var PostManager = (function () {
             this.resultsFound.classList.remove("hidden");
         }
     };
-    PostManager.prototype.emptyPage = function () {
-        var postContainers = document.getElementsByClassName("postContainer");
-        for (var i = 0; i < postContainers.length; i++) {
-            postContainers[i].innerHTML = "";
+    PostArea.prototype.emptyPage = function () {
+        for (var i = 0; i < this.postContainers.length; i++) {
+            this.postContainers[i].innerHTML = "";
             this.previewsLoadedCount = 0;
             this.loadedPreviews = [];
         }
         this.resultsFound.classList.add("hidden");
         this.pageIconContainer.innerHTML = "";
     };
-    PostManager.prototype.preLoad = function () {
+    PostArea.prototype.preLoad = function () {
         var rawPreviewsToLoadCount = this.rawPreviewsToLoadCount = this.postsData.length;
-        this.previewsToLoadCount = rawPreviewsToLoadCount >= PostManager.POST_LOAD_COUNT ? PostManager.POST_LOAD_COUNT : rawPreviewsToLoadCount;
+        this.previewsToLoadCount = rawPreviewsToLoadCount >= PostArea.POST_LOAD_COUNT ? PostArea.POST_LOAD_COUNT : rawPreviewsToLoadCount;
         var rawSearchTerm = window.location.search.substring(1).toLowerCase();
         var searchTerms = rawSearchTerm.split("%20");
         this.matches = [];
@@ -147,7 +152,7 @@ var PostManager = (function () {
             this.matches.push(this.postsData[i].filename + ".html");
         }
     };
-    PostManager.prototype.requestContent = function (startIndex) {
+    PostArea.prototype.requestContent = function (startIndex) {
         var _this = this;
         var _loop_1 = function (i) {
             if (!this_1.matches[i]) {
@@ -165,17 +170,17 @@ var PostManager = (function () {
                 this_1.loadPreviews(previewFoundInMemory.html, i, i - startIndex);
             }
             else {
-                this_1.httpRequest(PostManager.PREVIEWS_DIRECTORY + this_1.matches[i], function (response) { return _this.loadPreviews(response, i, i - startIndex, _this.matches[i]); });
+                this_1.httpRequest(PostArea.PREVIEWS_DIRECTORY + this_1.matches[i], function (response) { return _this.loadPreviews(response, i, i - startIndex, _this.matches[i]); });
             }
         };
         var this_1 = this;
-        for (var i = startIndex; i < startIndex + PostManager.POST_LOAD_COUNT; i++) {
+        for (var i = startIndex; i < startIndex + PostArea.POST_LOAD_COUNT; i++) {
             var state_1 = _loop_1(i);
             if (typeof state_1 === "object")
                 return state_1.value;
         }
     };
-    PostManager.prototype.loadPreviews = function (html, rawIndex, index, filename) {
+    PostArea.prototype.loadPreviews = function (html, rawIndex, index, filename) {
         if (filename) {
             this.previewsInMemory.push({ filename: filename, html: html });
         }
@@ -196,12 +201,12 @@ var PostManager = (function () {
             this.handleAfterPreviewLoad();
         }
     };
-    PostManager.prototype.handleAfterPreviewLoad = function () {
+    PostArea.prototype.handleAfterPreviewLoad = function () {
         var _this = this;
         this.postsLoadingIcon.remove();
         for (var _i = 0, _a = this.loadedPreviews; _i < _a.length; _i++) {
             var loadedPreview = _a[_i];
-            this.postContainers[loadedPreview.i].appendChild(loadedPreview.element);
+            this.postContainers[this.postContainers.length - 1 - loadedPreview.i].appendChild(loadedPreview.element);
         }
         var footers = document.getElementsByClassName("postFooter");
         var _loop_2 = function (i) {
@@ -215,30 +220,42 @@ var PostManager = (function () {
         var _loop_3 = function (i) {
             var linkElement = links[i];
             linkElement.addEventListener("click", function () {
-                var hiddenInputElement = linkElement.parentElement.lastElementChild;
+                var hiddenInputElement = linkElement.parentElement.parentElement.lastElementChild;
                 hiddenInputElement.classList.remove("hidden");
                 hiddenInputElement.select();
                 document.execCommand("copy");
                 hiddenInputElement.classList.add("hidden");
+                var text = linkElement.firstElementChild;
+                text.classList.add("hidden");
+                var tick = linkElement.lastElementChild;
+                tick.classList.remove("hidden");
+                setTimeout(function () {
+                    text.classList.remove("hidden");
+                    tick.classList.add("hidden");
+                }, 1000);
             });
         };
         for (var i = 0; i < links.length; i++) {
             _loop_3(i);
         }
         var rawPreviewCount = (window.location.search && window.location.search !== "") ? this.matches.length : this.rawPreviewsToLoadCount;
-        var pagesRequiredCount = Math.ceil(rawPreviewCount / PostManager.POST_LOAD_COUNT);
+        var pagesRequiredCount = Math.ceil(rawPreviewCount / PostArea.POST_LOAD_COUNT);
         for (var i = 0; i < pagesRequiredCount; i++) {
             var pageIcon = document.createElement("span");
             pageIcon.classList.add("pageIcon");
             pageIcon.innerText = (i + 1).toString();
             this.pageIconContainer.appendChild(pageIcon);
+            if (i === this.activePageIndex) {
+                pageIcon.classList.add("pageIcon-active");
+            }
             pageIcon.addEventListener("click", function (e) {
                 var clickedNumber = e.target.innerText;
-                _this.load(true, (+clickedNumber - 1) * PostManager.POST_LOAD_COUNT);
+                _this.activePageIndex = +clickedNumber - 1;
+                _this.load(true, _this.activePageIndex * PostArea.POST_LOAD_COUNT);
             });
         }
     };
-    PostManager.prototype.togglePostExpansion = function (footerElement) {
+    PostArea.prototype.togglePostExpansion = function (footerElement) {
         var _this = this;
         var parentElement = footerElement.parentElement;
         var postIndex = +parentElement.firstElementChild.innerText;
@@ -246,7 +263,7 @@ var PostManager = (function () {
         if (footerElement.innerText === "Read More") {
             footerElement.innerText = "Read Less";
             if (postContent.innerHTML === "") {
-                this.httpRequest(PostManager.POSTS_DIRECTORY + this.matches[postIndex], function (response) { return _this.loadPostContent(response, postContent); });
+                this.httpRequest(PostArea.POSTS_DIRECTORY + this.matches[postIndex], function (response) { return _this.loadPostContent(response, postContent); });
             }
             else {
                 postContent.classList.remove("hidden");
@@ -257,10 +274,10 @@ var PostManager = (function () {
             postContent.classList.add("hidden");
         }
     };
-    PostManager.prototype.loadPostContent = function (html, postBody) {
+    PostArea.prototype.loadPostContent = function (html, postBody) {
         postBody.innerHTML += html;
     };
-    PostManager.prototype.httpRequest = function (url, callback) {
+    PostArea.prototype.httpRequest = function (url, callback) {
         var xmlHttp = new XMLHttpRequest();
         xmlHttp.onreadystatechange = function () {
             if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
@@ -270,16 +287,16 @@ var PostManager = (function () {
         xmlHttp.open("GET", url, true);
         xmlHttp.send(null);
     };
-    PostManager.LOCAL_SERVER = location.hostname === "localhost" || location.hostname === "127.0.0.1";
-    PostManager.PREVIEWS_DIRECTORY = PostManager.LOCAL_SERVER ? "/josh-website/assets/previews/" : "/assets/previews/";
-    PostManager.POSTS_DIRECTORY = PostManager.LOCAL_SERVER ? "/josh-website/assets/posts/" : "/assets/posts/";
-    PostManager.ACTIVE_TAB_CLASS = "tab-active";
-    PostManager.FIXED_TOP_BAR_CLASS = "topBarWrapper-fixed";
-    PostManager.POST_LOAD_COUNT = 5;
-    return PostManager;
+    PostArea.LOCAL_SERVER = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+    PostArea.PREVIEWS_DIRECTORY = PostArea.LOCAL_SERVER ? "/josh-website/assets/previews/" : "/assets/previews/";
+    PostArea.POSTS_DIRECTORY = PostArea.LOCAL_SERVER ? "/josh-website/assets/posts/" : "/assets/posts/";
+    PostArea.ACTIVE_TAB_CLASS = "tab-active";
+    PostArea.FIXED_TOP_BAR_CLASS = "topBarWrapper-fixed";
+    PostArea.POST_LOAD_COUNT = 5;
+    return PostArea;
 }());
-var TabManager = (function () {
-    function TabManager() {
+var NavBar = (function () {
+    function NavBar() {
         var _this = this;
         this.tabs = document.getElementsByClassName("tab");
         this.allTab = this.tabs[0];
@@ -287,7 +304,7 @@ var TabManager = (function () {
         this.playersTab = this.tabs[2];
         this.bettingTab = this.tabs[3];
         this.horizontalSeperator = document.getElementsByClassName("horizontalSeperator")[0];
-        this.postManager = new PostManager();
+        this.postArea = new PostArea();
         for (var i = 0; i < this.tabs.length; i++) {
             this.tabs[i].addEventListener("click", function (e) {
                 var targetElement = e.target;
@@ -301,7 +318,7 @@ var TabManager = (function () {
         }
         this.setActiveTab(this.allTab);
     }
-    TabManager.prototype.setActiveTab = function (clickedTab) {
+    NavBar.prototype.setActiveTab = function (clickedTab) {
         if (clickedTab === this.activeTab) {
             return;
         }
@@ -323,10 +340,10 @@ var TabManager = (function () {
         else if (clickedTab === this.bettingTab) {
             postsData = Posts.BETTING;
         }
-        this.postManager.setPostsData(postsData);
-        this.postManager.load();
+        this.postArea.setPostsData(postsData);
+        this.postArea.load();
     };
-    return TabManager;
+    return NavBar;
 }());
 var SearchBar = (function () {
     function SearchBar() {
@@ -395,7 +412,7 @@ var TopBar = (function () {
 }());
 var Website = (function () {
     function Website() {
-        new TabManager();
+        new NavBar();
         new SearchBar();
         new TopBar();
     }

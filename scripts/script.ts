@@ -1,6 +1,6 @@
 class Website {	
 	constructor() {
-		new TabManager();
+		new NavBar();
 		new SearchBar();
 		new TopBar();
 	}

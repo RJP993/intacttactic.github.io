@@ -1,0 +1,115 @@
+.topBarWrapper {
+	margin-top: -50%;
+}
+
+.topBarWrapper-fixed {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 1;
+	text-align: center;
+	margin-top: 0;
+}
+
+.pageTitle {
+	font-size: 20px;
+	text-align: center;
+	color: white;
+	text-shadow: 2px 0 0 #292f33, -2px 0 0 #292f33, 0 2px 0 #292f33, 0 -2px 0 #292f33, 1px 1px #292f33, -1px -1px 0 #292f33, 1px -1px 0 #292f33, -1px 1px 0 #292f33;
+	margin-bottom: 8px;
+}
+
+.logo {
+	display: inline-block;
+   	width: 100px;
+	height: 100px;
+	margin-bottom: 40px;
+	vertical-align: middle;
+	background-image: url("assets/logo.png");
+    	background-size: contain;
+    	background-repeat: no-repeat;
+	border-radius: 10px;
+	box-shadow: 0 0 2px #292f33;
+}
+
+.topBarWrapper-fixed > .rightSideWrapper > .topBar > .searchWrapper > .logo {
+	display: inline-block;
+	width: 28px;
+	height: 28px;
+	margin-right: 0;
+	border-radius: 0;
+	box-shadow: none;
+}
+
+.rightSideWrapper {
+	display: inline-block;
+	vertical-align: middle;
+	font-size: 16px;
+}
+
+.topBarWrapper-fixed > .rightSideWrapper > .topBar {
+    	display: inline-flex;
+}
+
+.fa.twitterIcon {
+	width: 28px;
+	line-height: 40px;
+	margin-left: 2px;
+	color: white;
+	background-color: #292f33;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.fa.twitterIcon-center:before {
+	padding-left: 1px;
+}
+
+.fa.twitterIcon:hover {
+	background-color: #b22222;
+}
+
+.topBarWrapper-fixed > .rightSideWrapper > .topBar > .twitterIconWrapper > .fa.twitterIcon {
+	margin-left: 0;
+	line-height: 28px;
+}
+
+.topBarWrapper-fixed > .rightSideWrapper > .topBar > .twitterIconWrapper {
+    	height: 32px;
+    	padding: 2px;
+    	background-color: #fff;
+	border-radius: 1px;
+    	box-shadow: 0 0 2px #292f33;
+}
+
+@media (min-width: 630px) {
+	.topBarWrapper {
+		margin-top: 0;
+	}
+	
+	.pageTitle {
+		font-size: 22px;
+		text-align: left;
+	}
+	
+	.logo {
+		margin-right: 8px;
+		margin-bottom: 0;
+	}
+	
+	.rightSideWrapper {
+		font-size: 18px;
+	}
+	
+	.fa.twitterIcon {
+		line-height: 28px;
+	}
+}
+
+@media (min-width: 800px) {
+	.logo {
+		width: 120px;
+		height: 120px;
+	}
+}

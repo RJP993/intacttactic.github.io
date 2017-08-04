@@ -1,0 +1,126 @@
+.nav {
+	display: flex;
+	margin-bottom: 10px;
+	padding: 2px;
+	background-color: #fff;
+	border-radius: 1px;
+	box-shadow: 0 0 2px #292f33;
+}
+
+.tab {
+	line-height: 20px;
+	text-decoration: none;
+	color: #292f33;
+}
+
+.topBarWrapper-fixed > .rightSideWrapper > .topBar > .nav > .tab {
+	line-height: 28px;
+}
+
+.tab:hover {
+	color: #fff;
+	background-color: #b22222;
+}
+
+.tab-active {
+	color: #fff;
+	background-color: #b22222;
+}
+
+.tab + .tab {
+	margin-left: 2px;
+}
+
+.tabIcon {
+	padding-left: 7px;
+	padding-right: 7px;
+}
+
+.fa-pencil-square-o:before {
+	font-size: larger;
+	position: relative;
+	top: 2px;
+}
+
+.fa-gbp:before {
+	font-size: larger;
+	position: relative;
+	top: 2px;
+}
+
+.topBarWrapper-fixed > .rightSideWrapper > .topBar > .nav > .tab > .tabText {
+	display: none;
+}
+
+@media (min-width: 360px) {
+	.tabIcon {
+		padding-left: 20px;
+		padding-right: 20px;
+	}
+
+	.topBarWrapper-fixed > .rightSideWrapper > .topBar > .nav > .tab > .tabIcon {
+		padding-left: 10px;
+		padding-right: 10px;
+	}
+}
+
+@media (min-width: 480px) {
+	.tabIcon {
+		padding-left: 30px;
+		padding-right: 30px;
+	}
+	
+	.topBarWrapper-fixed > .rightSideWrapper > .topBar > .nav > .tab > .tabIcon {
+		padding-left: 16px;
+		padding-right: 16px;
+	}
+}
+
+@media (min-width: 560px) {
+	.tabIcon {
+		padding-left: 40px;
+		padding-right: 40px;
+	}
+}
+
+@media (min-width: 630px) {
+	.tab {
+		line-height: 28px;
+		width: 113px;
+	}
+	
+	.topBarWrapper-fixed > .rightSideWrapper > .topBar > .nav > .tab {
+		line-height: 28px;
+		width: 70px;
+	}
+
+	.tabIcon {
+		padding-left: initial;
+		padding-right: 4px;
+	}
+}
+
+@media (min-width: 800px) {	
+	.tab {
+		width: 150px;
+	}
+
+	.topBarWrapper-fixed > .rightSideWrapper > .topBar > .nav > .tab {
+		width: 110px;
+	}
+
+	.topBarWrapper-fixed > .rightSideWrapper > .topBar > .nav > .tab > .tabText {
+		display: initial;
+	}
+
+	.topBarWrapper-fixed > .rightSideWrapper > .topBar > .nav > .tab > .tabIcon {
+	    	padding-left: initial;
+    		padding-right: 4px;
+	}
+}
+
+@media (min-width: 940px) {
+	.topBarWrapper-fixed > .rightSideWrapper > .topBar > .nav > .tab {
+		width: 150px;
+	}
+}

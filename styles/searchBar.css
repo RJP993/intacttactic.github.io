@@ -1,0 +1,63 @@
+.topBarWrapper-fixed > .rightSideWrapper > .topBar > .searchWrapper {
+	height: 32px;
+	margin-left: 10px;
+	margin-right: 10px;
+	padding: 3px;
+    	background-color: #fff;
+	border-radius: 1px;
+    	box-shadow: 0 0 2px #292f33;
+}
+
+.search {
+	display: table;
+	width: 100%;
+	height: 26px;
+	line-height: 24px;
+	padding-left: 4px;
+	padding-right: 4px;
+	text-align: left;
+	background-color: #fff;
+	box-shadow: 0 0 2px #292f33;
+}
+
+
+.topBarWrapper-fixed > .rightSideWrapper > .topBar > .searchWrapper > .search {
+    	width: 120px;
+	margin-left: 2px;
+	margin-right: 2px;
+	padding-left: 0;
+	padding-right: 0;
+	box-shadow: none;
+}
+
+.fa.fa-search {
+	display: table-cell;
+	width: 22px;
+}
+
+.searchField {
+	display: table-cell;
+	width: 100%;
+	border: 0;
+}
+
+@media (min-width: 480px) {
+	.topBarWrapper-fixed > .rightSideWrapper > .topBar > .searchWrapper {
+		margin-left: 20px;
+		margin-right: 20px;
+	}
+
+	.topBarWrapper-fixed > .rightSideWrapper > .topBar > .searchWrapper > .search {
+		width: 180px;
+	}
+}
+
+@media (min-width: 630px) {	
+	.search {
+		width: 490px;
+	}
+	
+	.topBarWrapper-fixed > .rightSideWrapper > .topBar > .searchWrapper > .search {
+		width: 240px;
+	}
+}
