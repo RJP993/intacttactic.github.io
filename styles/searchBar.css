@@ -39,6 +39,7 @@
 	display: table-cell;
 	width: 94%;
 	border: 0;
+	font-size: 16px;
 }
 
 @media (min-width: 480px) {
