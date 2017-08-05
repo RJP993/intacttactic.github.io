@@ -13,9 +13,8 @@ class SearchBar {
 		});
 
 		// Prevent autoscroll on input focus on iOS
-		this.searchField.onfocus = () => {
-        		window.scrollTo(0, 0);
-        		document.body.scrollTop = 0;
+		this.searchField.onfocus = (e: Event) => {
+        		e.preventDefault();
     		}
 	}
 }

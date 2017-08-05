@@ -358,9 +358,8 @@ var SearchBar = (function () {
             window.location.search = _this.searchField.value;
         });
         // Prevent autoscroll on input focus on iOS
-        this.searchField.onfocus = function () {
-            window.scrollTo(0, 0);
-            document.body.scrollTop = 0;
+        this.searchField.onfocus = function (e) {
+            e.preventDefault();
         };
     }
     return SearchBar;
