@@ -26,6 +26,7 @@
 
 .postSubtitleWrapper {
 	display: table;
+	width: 100%;
 	margin-top: 2px;
 }
 
@@ -38,7 +39,7 @@
 	display: inline-block;
 	width: 50px;
 	border: 1px solid #fff;
-    	padding: 4px;
+    	padding: 2px;
     	text-align: center;
     	border-radius: 50px;
 	cursor: pointer;
