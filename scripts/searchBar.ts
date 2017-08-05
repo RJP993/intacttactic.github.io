@@ -11,5 +11,11 @@ class SearchBar {
 			window.location.hash = "#content";
 			window.location.search = this.searchField.value;
 		});
+
+		// Prevent autoscroll on input focus on iOS
+		this.searchField.onfocus = () => {
+        		window.scrollTo(0, 0);
+        		document.body.scrollTop = 0;
+    		}
 	}
 }

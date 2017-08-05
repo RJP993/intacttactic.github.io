@@ -357,6 +357,11 @@ var SearchBar = (function () {
             window.location.hash = "#content";
             window.location.search = _this.searchField.value;
         });
+        // Prevent autoscroll on input focus on iOS
+        this.searchField.onfocus = function () {
+            window.scrollTo(0, 0);
+            document.body.scrollTop = 0;
+        };
     }
     return SearchBar;
 }());
