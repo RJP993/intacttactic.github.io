@@ -86,6 +86,7 @@ body {
 
 .twitter {
 	width: 300px;
+	max-width: 300px;
 	height: 1220px;
 	margin: 20px;
 	background-color: #fff;
