@@ -381,21 +381,25 @@ var TopBar = (function () {
         this.topBar = document.getElementsByClassName("topBar")[0];
         this.landing = document.getElementsByClassName("landing")[0];
         this.scroll = document.getElementsByClassName("scroll")[0];
-        this.isFixed = false;
+        this.opacityOverlay = document.getElementsByClassName("opacityOverlay")[0];
         this.preFixedTop = 0;
+        this.currentOpacity = 0;
+        this.initial = function () { return _this.handleInitialFixState(); };
+        this.fix = function () { return _this.handleFix(); };
+        this.unfix = function () { return _this.handleUnfix(); };
         if (Browser.IS_CHROME) {
             this.twitterIcon.classList.add("twitterIcon-center");
         }
         if (Browser.IS_IOS) {
             this.topBar.classList.add("topbar-center");
         }
-        window.addEventListener("scroll", function () { return _this.fix(); });
-        this.fix();
+        window.addEventListener("scroll", this.initial);
+        this.handleInitialFixState();
     }
-    TopBar.prototype.fix = function () {
+    // Later split into two methods for optimization purposes
+    TopBar.prototype.handleInitialFixState = function () {
         var navTop = this.nav.offsetTop;
-        if (!this.isFixed && navTop < window.pageYOffset) {
-            this.isFixed = true;
+        if (navTop < window.pageYOffset) {
             this.preFixedTop = navTop;
             this.topBarWrapper.classList.add("topBarWrapper-fixed");
             this.rightSideWrapper.removeChild(this.pageTitle);
@@ -403,9 +407,10 @@ var TopBar = (function () {
             this.searchWrapper.appendChild(this.search);
             this.twitterIconWrapper.appendChild(this.twitterIcon);
             this.fixedBarAnchor.appendChild(this.topBarWrapper);
+            window.removeEventListener("scroll", this.initial);
+            window.addEventListener("scroll", this.unfix);
         }
-        else if (this.isFixed && this.preFixedTop > window.pageYOffset) {
-            this.isFixed = false;
+        else if (this.preFixedTop > window.pageYOffset) {
             this.topBarWrapper.classList.remove("topBarWrapper-fixed");
             this.rightSideWrapper.insertBefore(this.pageTitle, this.topBar);
             this.rightSideWrapper.appendChild(this.search);
@@ -413,9 +418,49 @@ var TopBar = (function () {
             this.nav.appendChild(this.twitterIcon);
             this.landing.appendChild(this.topBarWrapper);
             this.landing.appendChild(this.scroll);
+            window.removeEventListener("scroll", this.initial);
+            window.addEventListener("scroll", this.fix);
         }
-        this.landing.style.opacity = (1 - window.pageYOffset / window.innerHeight).toString();
+        this.updateOpacity();
     };
+    TopBar.prototype.handleFix = function () {
+        var navTop = this.nav.offsetTop;
+        if (navTop < window.pageYOffset) {
+            this.preFixedTop = navTop;
+            this.topBarWrapper.classList.add("topBarWrapper-fixed");
+            this.rightSideWrapper.removeChild(this.pageTitle);
+            this.topBarWrapper.removeChild(this.logo);
+            this.searchWrapper.appendChild(this.search);
+            this.twitterIconWrapper.appendChild(this.twitterIcon);
+            this.fixedBarAnchor.appendChild(this.topBarWrapper);
+            window.removeEventListener("scroll", this.fix);
+            window.addEventListener("scroll", this.unfix);
+        }
+        this.updateOpacity();
+    };
+    TopBar.prototype.handleUnfix = function () {
+        if (this.preFixedTop > window.pageYOffset) {
+            this.topBarWrapper.classList.remove("topBarWrapper-fixed");
+            this.rightSideWrapper.insertBefore(this.pageTitle, this.topBar);
+            this.rightSideWrapper.appendChild(this.search);
+            this.topBarWrapper.insertBefore(this.logo, this.rightSideWrapper);
+            this.nav.appendChild(this.twitterIcon);
+            this.landing.appendChild(this.topBarWrapper);
+            this.landing.appendChild(this.scroll);
+            window.removeEventListener("scroll", this.unfix);
+            window.addEventListener("scroll", this.fix);
+        }
+        this.updateOpacity();
+    };
+    TopBar.prototype.updateOpacity = function () {
+        var newOpacity = window.pageYOffset / window.innerHeight;
+        if (newOpacity > 0 && Math.abs(this.currentOpacity - newOpacity) < TopBar.OPACITY_THRESHOLD) {
+            return; // avoid painting as much as possible as it causes scroll lag
+        }
+        this.currentOpacity = newOpacity;
+        this.opacityOverlay.style.opacity = newOpacity.toString();
+    };
+    TopBar.OPACITY_THRESHOLD = 0.1;
     return TopBar;
 }());
 var Website = (function () {

@@ -3,12 +3,42 @@ body {
 	font-family: 'latoregular';
 	font-size: 0;
 	color: #292f33;
+	height: 100vh;
+	background-color: #eee;
+}
+
+body:after {
+	content: "";
+    	position: fixed;
+	left: 0;
+	right: 0;
+	top: 0;
+	min-width: 100%;
+	min-height: 100%;
+	justify-content: center;
+    	align-items: center;
+	text-align: center;
+	padding: 12px;
+	background: url("assets/buffon.jpg") center center / cover no-repeat;
+ 	box-shadow: inset 0 0 160px #000000;
+	z-index: -1;
+	will-change: transform;
+}
+
+.opacityOverlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 1;
+	background-color: #eee;
+	opacity: 0;
 }
 
 .landingWrapper {
 	height: 100vh;
 	position: relative;
-	background-color: #EEE;
 }
 
 .landing {
@@ -19,8 +49,6 @@ body {
     	align-items: center;
 	text-align: center;
 	padding: 12px;
-	background: url("assets/buffon.jpg") center center / cover no-repeat fixed;
- 	box-shadow: inset 0 0 160px #000000;
 }
 
 .fa.scroll {
