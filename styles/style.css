@@ -61,6 +61,7 @@ body:after {
 	text-shadow: 0 0 2px #292f33;
 	text-decoration: none;
 	cursor: pointer;
+	z-index: 2;
 }
 
 .scroll:hover {
