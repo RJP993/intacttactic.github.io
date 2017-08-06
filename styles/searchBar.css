@@ -40,6 +40,11 @@
 	width: 22px;
 }
 
+.topBarWrapper-fixed > .rightSideWrapper > .topbar-center > .searchWrapper > .search > .fa.fa-search {
+	position: relative;
+	top: -1px;
+}
+
 .searchField {
 	display: table-cell;
 	width: 94%;
