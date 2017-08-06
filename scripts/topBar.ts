@@ -29,7 +29,7 @@ class TopBar {
 		}
 
 		if (Browser.IS_IOS) {
-			this.topBar.classList.add("topbar-center");
+			this.topBar.classList.add("topBar-center");
 		}
 
 		window.addEventListener("scroll", this.initial);

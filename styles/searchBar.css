@@ -31,7 +31,7 @@
 	box-shadow: none;
 }
 
-.topBarWrapper-fixed > .rightSideWrapper > .topbar-center > .searchWrapper > .search {
+.topBarWrapper-fixed > .rightSideWrapper > .topBar-center > .searchWrapper > .search {
 	margin-top: -1px;
 }
 
@@ -40,7 +40,7 @@
 	width: 22px;
 }
 
-.topBarWrapper-fixed > .rightSideWrapper > .topbar-center > .searchWrapper > .search > .fa.fa-search {
+.topBarWrapper-fixed > .rightSideWrapper > .topBar-center > .searchWrapper > .search > .fa.fa-search {
 	position: relative;
 	top: -1px;
 }
