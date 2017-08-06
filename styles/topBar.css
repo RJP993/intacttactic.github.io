@@ -75,6 +75,10 @@
 	line-height: 28px;
 }
 
+.topBarWrapper-fixed > .rightSideWrapper > .topbar-center > .twitterIconWrapper > .fa.twitterIcon {
+	margin-top: 1px;
+}
+
 .topBarWrapper-fixed > .rightSideWrapper > .topBar > .twitterIconWrapper {
     	height: 32px;
     	padding: 2px;

@@ -20,6 +20,10 @@ class TopBar {
 		if (Browser.IS_CHROME) {
 			this.twitterIcon.classList.add("twitterIcon-center");
 		}
+
+		if (Browser.IS_IOS) {
+			this.topBar.classList.add("topbar-center");
+		}
 		
 		window.addEventListener("scroll", () => this.fix());
 		

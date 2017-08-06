@@ -31,6 +31,7 @@ var Browser = (function () {
     }
     Browser.IS_OPERA = window.navigator.userAgent.indexOf("OPR") > -1;
     Browser.IS_EDGE = window.navigator.userAgent.indexOf("Edge") > -1;
+    Browser.IS_IOS = /iPad|iPhone|iPod/.test(window.navigator.userAgent) && !window.MSStream;
     Browser.IS_IOS_CHROME = window.navigator.userAgent.match("CriOS");
     Browser.IS_CHROME = window.chrome !== null && window.chrome !== undefined && window.navigator.vendor === "Google Inc." && !Browser.IS_OPERA && !Browser.IS_EDGE;
     return Browser;
@@ -384,6 +385,9 @@ var TopBar = (function () {
         this.preFixedTop = 0;
         if (Browser.IS_CHROME) {
             this.twitterIcon.classList.add("twitterIcon-center");
+        }
+        if (Browser.IS_IOS) {
+            this.topBar.classList.add("topbar-center");
         }
         window.addEventListener("scroll", function () { return _this.fix(); });
         this.fix();
