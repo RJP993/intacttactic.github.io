@@ -12,6 +12,7 @@
 		"navBar.ts",
 		"searchBar.ts",
 		"topBar.ts",
+		"externalScriptLoader.ts",
 		"script.ts"
 	]
 }	
