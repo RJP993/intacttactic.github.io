@@ -8,3 +8,8 @@ echo "Compiled TypeScript"
 cd ../
 uglifyjs scripts/script.js > min.js
 echo "Minified JavaScript"
+uglifyjs scripts/amazon-ad-common.js > amazon-ad-common-min.js
+uglifyjs scripts/amazon-ad-desktop.js > amazon-ad-desktop-min.js
+uglifyjs scripts/amazon-ad-tablet.js > amazon-ad-tablet-min.js
+uglifyjs scripts/amazon-ad-mobile-large.js > amazon-ad-mobile-large-min.js
+echo "Minified Ad Scripts"

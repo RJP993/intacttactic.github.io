@@ -3,6 +3,7 @@ class Website {
 		new NavBar();
 		new SearchBar();
 		new TopBar();
+		new ExternalScriptLoader();
 	}
 }
 
