@@ -29,10 +29,10 @@ body:after {
 	position: absolute;
 	top: 0;
 	left: 0;
+	right: 0;
 	z-index: 1;
 	background-color: #eee;
 	opacity: 0;
-	width: 100vh;
 	height: 100vh;
 }
 
