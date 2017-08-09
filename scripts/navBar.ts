@@ -49,7 +49,7 @@ class NavBar {
 		} else if (clickedTab === this.bettingTab) {
 			postsData = Posts.BETTING;
 		}
-
+		
 		this.postArea.setPostsData(postsData);
 		this.postArea.load();	
 	}	

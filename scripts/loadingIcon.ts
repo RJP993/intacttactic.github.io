@@ -25,6 +25,10 @@ class LoadingIcon {
 		this.parentElement.appendChild(this.wrapper);
 	}
 
+	public appendBefore(element: Element): void {
+		this.parentElement.insertBefore(this.wrapper, element);
+	}
+
 	public remove(): void {
 		if (!this.parentElement.contains(this.wrapper)) {
 			return;

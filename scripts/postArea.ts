@@ -12,6 +12,7 @@ class PostArea {
 	private static readonly POST_LOAD_COUNT = 5;
 
 	private posts = document.getElementsByClassName("posts")[0];
+	private secondMobileAd = document.getElementsByClassName("mobileAdWrapper")[1];
 	private resultsFound = document.getElementsByClassName("resultsFound")[0];
 	private pageIconContainer = document.getElementsByClassName("pageIconContainer")[0];
 	private postContainers: HTMLElement[] = [];
@@ -42,8 +43,7 @@ class PostArea {
 
 	public load(skipPreLoad = false, startIndex = 0): void {
 		this.emptyPage();
-		this.postsLoadingIcon.append();
-		
+
 		const pageIcons = this.pageIconContainer.children;
 		if (pageIcons.length > 0) {
 			this.pageIconContainer.children[this.activePageIndex].classList.remove("pageIcon-active");
@@ -54,8 +54,8 @@ class PostArea {
 			this.preLoad();
 		}
 
-
-		if (this.matches && this.matches.length > 0) {
+		if (this.matches && this.matches.length > 0 && this.matches[0] !== ".html") {
+			this.postsLoadingIcon.appendBefore(this.secondMobileAd);
 			this.requestContent(startIndex);
 		} else {
 			this.resultsFound.classList.remove("hidden");

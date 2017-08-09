@@ -54,6 +54,9 @@ var LoadingIcon = (function () {
     LoadingIcon.prototype.append = function () {
         this.parentElement.appendChild(this.wrapper);
     };
+    LoadingIcon.prototype.appendBefore = function (element) {
+        this.parentElement.insertBefore(this.wrapper, element);
+    };
     LoadingIcon.prototype.remove = function () {
         if (!this.parentElement.contains(this.wrapper)) {
             return;
@@ -70,6 +73,7 @@ var PostObject = (function () {
 var PostArea = (function () {
     function PostArea() {
         this.posts = document.getElementsByClassName("posts")[0];
+        this.secondMobileAd = document.getElementsByClassName("mobileAdWrapper")[1];
         this.resultsFound = document.getElementsByClassName("resultsFound")[0];
         this.pageIconContainer = document.getElementsByClassName("pageIconContainer")[0];
         this.postContainers = [];
@@ -91,7 +95,6 @@ var PostArea = (function () {
         if (skipPreLoad === void 0) { skipPreLoad = false; }
         if (startIndex === void 0) { startIndex = 0; }
         this.emptyPage();
-        this.postsLoadingIcon.append();
         var pageIcons = this.pageIconContainer.children;
         if (pageIcons.length > 0) {
             this.pageIconContainer.children[this.activePageIndex].classList.remove("pageIcon-active");
@@ -100,7 +103,8 @@ var PostArea = (function () {
             this.activePageIndex = 0;
             this.preLoad();
         }
-        if (this.matches && this.matches.length > 0) {
+        if (this.matches && this.matches.length > 0 && this.matches[0] !== ".html") {
+            this.postsLoadingIcon.appendBefore(this.secondMobileAd);
             this.requestContent(startIndex);
         }
         else {
