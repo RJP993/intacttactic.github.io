@@ -1,5 +1,5 @@
 class TopBar { 
-	private static readonly OPACITY_THRESHOLD = 0.1;
+	private static readonly OPACITY_THRESHOLD = 0.05;
 
 	private nav = document.getElementsByClassName("nav")[0];
 	private topBarWrapper = document.getElementsByClassName("topBarWrapper")[0];

@@ -469,7 +469,7 @@ var TopBar = (function () {
         this.currentOpacity = newOpacity;
         this.opacityOverlay.style.opacity = newOpacity.toString();
     };
-    TopBar.OPACITY_THRESHOLD = 0.1;
+    TopBar.OPACITY_THRESHOLD = 0.05;
     return TopBar;
 }());
 var ExternalScriptLoader = (function () {
