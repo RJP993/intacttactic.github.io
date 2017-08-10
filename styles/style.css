@@ -1,3 +1,7 @@
+a {
+  	color: #b22222;
+}
+
 body {
 	box-sizing: border-box;
 	font-family: 'latoregular';
@@ -158,6 +162,7 @@ body:after {
 .mobileAdWrapper {
 	padding-bottom: 8px;
 	text-align: center;
+	overflow: hidden;
 }
 
 .mobileAd {
@@ -186,12 +191,48 @@ body:after {
     	background-color: white;
 }
 
-.copyright {
-	font-size: 14px;
-    	margin-right: 10px;
-    	text-align: right;
-    	line-height: 22px;
-    	vertical-align: middle;
+.tabletAd-top {
+	margin-top: 20px;
+}
+
+.footer {
+	margin-top: 50vh;
+	background-color: #eee;
+}
+ 
+.aboutWrapper {
+	max-width: 1000px;
+	margin: 8px auto;
+}
+
+.about {
+	margin-left: 8px;
+	margin-right: 8px;
+	background-color: white;
+}
+
+.about + .about {
+	margin-top: 8px;
+}
+
+.aboutHeading {
+	font-size: 20px;
+	padding: 8px;
+	background-color: #b22222;
+	color: white;
+}
+
+.aboutBody {
+	padding: 8px;
+}
+
+.aboutText {
+	font-size: 16px;
+    	line-height: 20px;
+}
+
+.aboutText + .aboutText {
+	padding-top: 8px;
 }
 
 .hidden {
@@ -209,10 +250,44 @@ body:after {
 }
 
 @media (min-width: 728px) {
+	.main {
+		padding-top: 20px;
+	}
+
+	.mobileAdWrapper {
+		padding-bottom: 20px;
+	}
+	
 	.mobileAd {
 		width: 728px;
 		height: 90px;
 		border: 0;
+	}
+
+	.aboutWrapper {
+		margin: 20px auto;
+	}
+	
+	.about {
+		margin-left: 20px;
+		margin-right: 20px;
+	}
+	
+	.about + .about {
+		margin-top: 20px;
+	}
+	
+	.aboutHeading {
+		font-size: 24px;
+		padding: 12px;
+	}
+	
+	.aboutBody {
+		padding: 20px;
+	}
+	
+	.aboutText + .aboutText {
+		padding-top: 10px;
 	}
 }
 
@@ -265,6 +340,7 @@ body:after {
 
 	.posts {
 		display: initial;
+		margin-top: 20px;
 		padding: 0;
 	}
 

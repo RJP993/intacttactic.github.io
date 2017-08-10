@@ -10,13 +10,13 @@ var Posts = (function () {
         { filename: "03-01-2015", tags: ["underrated", "managers", "part", "1", "unai", "emery"] },
         { filename: "16-01-2015", tags: ["underrated", "managers", "part", "2", "francesco", "guidolin"] },
         { filename: "04-06-2016", tags: ["underrated", "managers", "part", "3", "leonardo", "jardim"] },
-        { filename: "04-11-2016", tags: ["shkodran", "mustafi", "good", "bad", "ugly"] }
+        { filename: "04-11-2016", tags: ["shkodran", "mustafi", "good", "bad", "ugly"] },
     ];
     Posts.WRITEUPS = [
         { filename: "03-01-2015", tags: ["underrated", "managers", "part", "1", "unai", "emery"] },
         { filename: "16-01-2015", tags: ["underrated", "managers", "part", "2", "francesco", "guidolin"] },
         { filename: "04-06-2016", tags: ["underrated", "managers", "part", "3", "leonardo", "jardim"] },
-        { filename: "04-11-2016", tags: ["shkodran", "mustafi", "good", "bad", "ugly"] }
+        { filename: "04-11-2016", tags: ["shkodran", "mustafi", "good", "bad", "ugly"] },
     ];
     Posts.PLAYERS = [
         { filename: "", tags: [""] }
