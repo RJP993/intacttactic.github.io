@@ -51,7 +51,7 @@
 }
 
 .postBody {
-	padding: 8px;
+	padding: 10px;
 	background-color: #fff;
 }
 
@@ -108,6 +108,10 @@
 .intro {
 	display: table-cell;
 	vertical-align: middle;
+}
+
+.content {
+	margin-top: 8px;
 }
 
 .postFooter {
@@ -228,6 +232,10 @@
 		padding-left: 20px;
 	}	
 	
+	.content {
+		margin-top: 10px;
+	}
+
 	.postFooter {
 		margin-bottom: 50px;
 	}
