@@ -1,0 +1,248 @@
+.post {
+	border-radius: 1px;
+}
+
+.post-expanded {
+	max-height: none;
+}
+
+.postTitleWrapper {
+	display: flex;
+}
+
+.postHeader {
+	position: relative;
+	padding: 8px;
+	color: #fff;
+	background-color: #b22222;
+}
+
+.postHeaderTitle {
+	font-size: 20px;
+    	white-space: nowrap;
+    	overflow: hidden;
+    	text-overflow: ellipsis;
+}
+
+.postSubtitleWrapper {
+	display: table;
+	width: 100%;
+	margin-top: 4px;
+}
+
+.postHeaderDate {
+	display: table-cell;
+	width: 100%;
+}
+
+.postHeaderLink {
+	display: inline-block;
+	width: 80px;
+	border: 1px solid #fff;
+    	padding: 2px;
+    	text-align: center;
+    	border-radius: 8px;
+	cursor: pointer;
+}
+
+.postHeaderLink:hover {
+    	color: #b22222;
+    	background-color: #fff;
+}
+
+.postBody {
+	padding: 10px;
+	background-color: #fff;
+}
+
+.heading1 {
+    	font-size: 20px;
+	margin-top: 12px;
+	margin-bottom: 12px;
+	text-align: center;
+    	background-color: #eee;
+    	padding: 4px;
+}
+
+.heading2 {
+	font-size: 18px;
+	margin-top: 16px;
+	margin-bottom: 8px;
+	font-weight: bold;
+}
+
+.paragraph {
+	line-height: 20px;
+}
+
+.paragraph + .paragraph {
+	margin-top: 8px;
+}
+
+.imageWrapper {
+    	width: 90%;
+	margin: 20px auto;
+	padding: 10px;
+    	background-color: #eee;
+}
+
+.image {
+	display: block;
+	max-width: 100%;
+    	height: auto;
+    	margin-left: auto;
+   	margin-right: auto;
+}
+
+.introImage {
+	margin-bottom: 8px;
+	padding: 8px;
+	background-color: #EEE;
+}
+
+.introImage > .image {
+	max-width: none;
+	max-height: 150px;
+}
+
+.intro {
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.content {
+	margin-top: 8px;
+}
+
+.postFooter {
+	margin-bottom: 8px;
+    	padding: 10px;
+    	text-align: center;
+    	color: #fff;
+	background-color: #292f33;
+	cursor: pointer;
+}
+
+.postFooter:hover {
+	background-color: #b22222;
+}
+
+.postFooter + .post {
+	margin-top: 50px;
+}
+
+.resultsFound {
+	width: 100%;
+	max-height: 100vh;
+	margin-top: 200px;
+	text-align: center;
+    	font-size: 20px;
+    	font-weight: bold;
+    	margin-bottom: 200px;
+}
+
+.pageIconContainer {
+	text-align: center;
+	padding-bottom: 8px;
+}
+
+.pageIcon {
+    	display: inline-block;
+	width: 30px;
+   	height: 30px;
+    	line-height: 30px;
+    	background-color: #292f33;
+    	color: #fff;
+	cursor: pointer;
+}
+
+.pageIcon-active {
+	background-color: #b22222;
+}
+
+.pageIcon + .pageIcon {
+	margin-left: 20px;
+}
+
+@media (min-width: 728px) {
+	.posts {
+		flex-basis: 1000px;
+		margin: 0 20px 0 20px;
+	}
+	
+	.postHeader {
+		padding: 12px;
+	}
+	
+	.postHeaderTitle {
+		font-size: 24px;
+	}
+	
+	.postHeaderDate {    
+	    	margin-left: 12px;
+	}
+	
+	.postBody {
+		padding: 20px;
+	}
+	
+	.heading1 {
+	    	font-size: 24px;
+		margin-top: 30px;
+		margin-bottom: 30px;
+	}
+	
+	.heading2 {
+		font-size: 20px;
+		margin-top: 28px;
+		margin-bottom: 14px;
+	}
+	
+	.paragraph + .paragraph {
+		margin-top: 10px;
+	}
+	
+	.imageWrapper {
+	    	width: 90%;
+		margin: 20px auto;
+		padding: 10px;
+	}
+	
+	.image {
+		display: block;
+		max-width: 100%;
+	    	height: auto;
+	    	margin-left: auto;
+	   	margin-right: auto;
+	}
+	
+	.introImage {
+		display: table-cell;
+		width: 220px;
+		margin: 0;
+		padding: 0;
+		vertical-align: middle;
+	}
+	
+	.introImage > .image {
+		max-width: 200px;
+		border: 1px solid #eee;
+	}
+
+	.intro {
+		padding-left: 20px;
+	}	
+	
+	.content {
+		margin-top: 10px;
+	}
+
+	.postFooter {
+		margin-bottom: 50px;
+	}
+	
+	.pageIconContainer {
+		margin-top: -30px;
+		padding-bottom: 20px;
+	}
+}
