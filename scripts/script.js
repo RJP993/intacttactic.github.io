@@ -228,8 +228,18 @@ var PostArea = (function () {
                 var hiddenInputElement = linkElement.parentElement.parentElement.lastElementChild;
                 hiddenInputElement.classList.remove("hidden");
                 if (Browser.IS_IOS) {
-                    hiddenInputElement.selectionStart = 0;
-                    hiddenInputElement.selectionEnd = 999;
+                    var editable = hiddenInputElement.contentEditable;
+                    var readOnly = hiddenInputElement.readOnly;
+                    hiddenInputElement.contentEditable = "true";
+                    hiddenInputElement.readOnly = false;
+                    var range = document.createRange();
+                    range.selectNodeContents(hiddenInputElement);
+                    var selection = window.getSelection();
+                    selection.removeAllRanges();
+                    selection.addRange(range);
+                    hiddenInputElement.setSelectionRange(0, 999);
+                    hiddenInputElement.contentEditable = editable;
+                    hiddenInputElement.readOnly = readOnly;
                 }
                 else {
                     hiddenInputElement.select();

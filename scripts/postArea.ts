@@ -188,8 +188,21 @@ class PostArea {
 				hiddenInputElement.classList.remove("hidden");
 
 				if (Browser.IS_IOS) {
-					hiddenInputElement.selectionStart = 0;
-					hiddenInputElement.selectionEnd = 999;
+					const editable = hiddenInputElement.contentEditable;
+					const readOnly = hiddenInputElement.readOnly;
+					hiddenInputElement.contentEditable = "true";
+					hiddenInputElement.readOnly = false;
+
+					const range = document.createRange();
+					range.selectNodeContents(hiddenInputElement);
+
+					const selection = window.getSelection();
+					selection.removeAllRanges();
+					selection.addRange(range);
+
+					hiddenInputElement.setSelectionRange(0, 999);
+					hiddenInputElement.contentEditable = editable;
+					hiddenInputElement.readOnly = readOnly;
 				}
 				else {
 					hiddenInputElement.select();
