@@ -226,23 +226,34 @@ var PostArea = (function () {
             var linkElement = links[i];
             linkElement.addEventListener("click", function () {
                 var hiddenInputElement = linkElement.parentElement.parentElement.lastElementChild;
+                hiddenInputElement.classList.remove("hiddenInput");
                 if (Browser.IS_IOS) {
-                    prompt("Copy the link below:", hiddenInputElement.value);
+                    var editable = hiddenInputElement.contentEditable;
+                    var readOnly = hiddenInputElement.readOnly;
+                    hiddenInputElement.contentEditable = "true";
+                    hiddenInputElement.readOnly = false;
+                    var range = document.createRange();
+                    range.selectNodeContents(hiddenInputElement);
+                    var selection = window.getSelection();
+                    selection.removeAllRanges();
+                    selection.addRange(range);
+                    hiddenInputElement.setSelectionRange(0, 999);
+                    hiddenInputElement.contentEditable = editable;
+                    hiddenInputElement.readOnly = readOnly;
                 }
                 else {
-                    hiddenInputElement.classList.remove("hidden");
                     hiddenInputElement.select();
-                    document.execCommand("copy");
-                    hiddenInputElement.classList.add("hidden");
-                    var text_1 = linkElement.firstElementChild;
-                    text_1.classList.add("hidden");
-                    var tick_1 = linkElement.lastElementChild;
-                    tick_1.classList.remove("hidden");
-                    setTimeout(function () {
-                        text_1.classList.remove("hidden");
-                        tick_1.classList.add("hidden");
-                    }, 1000);
                 }
+                document.execCommand("copy");
+                hiddenInputElement.classList.add("hiddenInput");
+                var text = linkElement.firstElementChild;
+                text.classList.add("hidden");
+                var tick = linkElement.lastElementChild;
+                tick.classList.remove("hidden");
+                setTimeout(function () {
+                    text.classList.remove("hidden");
+                    tick.classList.add("hidden");
+                }, 1000);
             });
         };
         for (var i = 0; i < links.length; i++) {

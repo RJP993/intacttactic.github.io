@@ -41,7 +41,7 @@
 	border: 1px solid #fff;
     	padding: 2px;
     	text-align: center;
-    	border-radius: 12px;
+    	border-radius: 8px;
 	cursor: pointer;
 }
 
@@ -211,14 +211,20 @@
 	
 	.introImage {
 		display: table-cell;
-		margin: 10px auto;
-		background-color: initial;
+		width: 220px;
+		margin: 0;
+		padding: 0;
+		vertical-align: middle;
 	}
 	
 	.introImage > .image {
+		max-width: 200px;
 		border: 1px solid #eee;
 	}
-	
+
+	.intro {
+		padding-left: 20px;
+	}	
 	
 	.postFooter {
 		margin-bottom: 50px;
