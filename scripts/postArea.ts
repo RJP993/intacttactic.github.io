@@ -185,41 +185,26 @@ class PostArea {
 			const linkElement = links[i] as HTMLElement;
 			linkElement.addEventListener("click", () => {
 				const hiddenInputElement = linkElement.parentElement.parentElement.lastElementChild as HTMLInputElement;
-				hiddenInputElement.classList.remove("hiddenInput");
 
-				if (Browser.IS_IOS) {
-					const editable = hiddenInputElement.contentEditable;
-					const readOnly = hiddenInputElement.readOnly;
-					hiddenInputElement.contentEditable = "true";
-					hiddenInputElement.readOnly = false;
-
-					const range = document.createRange();
-					range.selectNodeContents(hiddenInputElement);
-
-					const selection = window.getSelection();
-					selection.removeAllRanges();
-					selection.addRange(range);
-
-					hiddenInputElement.setSelectionRange(0, 999);
-					hiddenInputElement.contentEditable = editable;
-					hiddenInputElement.readOnly = readOnly;
+				if (Browser.IS_IOS) {	
+					prompt("Copy the link below:", hiddenInputElement.value);
 				}
 				else {
-					hiddenInputElement.select();
+					hiddenInputElement.classList.remove("hiddenInput");
+					hiddenInputElement.select();	
+					document.execCommand("copy");
+					hiddenInputElement.classList.add("hiddenInput");
+
+					const text = linkElement.firstElementChild;
+					text.classList.add("hidden");
+
+					const tick = linkElement.lastElementChild;
+					tick.classList.remove("hidden");
+					setTimeout(() => {
+						text.classList.remove("hidden");
+						tick.classList.add("hidden");
+					}, 1000);
 				}
-
-				document.execCommand("copy");
-				hiddenInputElement.classList.add("hiddenInput");
-
-				const text = linkElement.firstElementChild;
-				text.classList.add("hidden");
-
-				const tick = linkElement.lastElementChild;
-				tick.classList.remove("hidden");
-				setTimeout(() => {
-					text.classList.remove("hidden");
-					tick.classList.add("hidden");
-				}, 1000);
 			});
 		}
 
