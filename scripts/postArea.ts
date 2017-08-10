@@ -186,7 +186,15 @@ class PostArea {
 			linkElement.addEventListener("click", () => {
 				const hiddenInputElement = linkElement.parentElement.parentElement.lastElementChild as HTMLInputElement;
 				hiddenInputElement.classList.remove("hidden");
-				hiddenInputElement.select();
+
+				if (Browser.IS_IOS) {
+					hiddenInputElement.selectionStart = 0;
+					hiddenInputElement.selectionEnd = 999;
+				}
+				else {
+					hiddenInputElement.select();
+				}
+
 				document.execCommand("copy");
 				hiddenInputElement.classList.add("hidden");
 
