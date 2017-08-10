@@ -21,7 +21,7 @@ class ExternalScriptLoader {
 	private resizeHandler(): void {
 		const width = window.innerWidth;
 		
-		if (!this.isDesktopAdLoaded && width > ExternalScriptLoader.DESKTOP_THRESHOLD) {
+		if (!this.isDesktopAdLoaded && width >= ExternalScriptLoader.DESKTOP_THRESHOLD) {
 			this.isDesktopAdLoaded = true;
 
 			if (!this.isTwitterLoaded) {
@@ -46,7 +46,7 @@ class ExternalScriptLoader {
 			adScript.src = "amazon-ad-desktop-min.js";
 			this.desktopAds[1].appendChild(adScript);
 		} 
-		else if (!this.isTabletAdLoaded && width > ExternalScriptLoader.TABLET_THRESHOLD) {
+		else if (!this.isTabletAdLoaded && width >= ExternalScriptLoader.TABLET_THRESHOLD) {
 			this.isTabletAdLoaded = true;
 			
 			if (!this.tabletAds) {
@@ -61,7 +61,7 @@ class ExternalScriptLoader {
 			adScript.src = "amazon-ad-tablet-min.js";
 			this.tabletAds[1].appendChild(adScript);
 		} 
-		else if (!this.isLargeMobileAdLoaded && width > ExternalScriptLoader.LARGE_MOBILE_THRESHOLD) {
+		else if (!this.isLargeMobileAdLoaded && width >= ExternalScriptLoader.LARGE_MOBILE_THRESHOLD) {
 			this.isLargeMobileAdLoaded = true;
 			this.isSmallMobileAdLoaded = false;
 
@@ -80,7 +80,7 @@ class ExternalScriptLoader {
 			adScript.src = "amazon-ad-mobile-large-min.js";
 			this.mobileAds[1].appendChild(adScript);
 		} 
-		else if (!this.isSmallMobileAdLoaded) {
+		else if (!this.isSmallMobileAdLoaded && width < ExternalScriptLoader.LARGE_MOBILE_THRESHOLD) {
 			this.isSmallMobileAdLoaded = true;
 			this.isLargeMobileAdLoaded = false;
 			
