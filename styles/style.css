@@ -239,6 +239,14 @@ body:after {
 	display: none !important;
 }
 
+.hiddenInput {
+	display: none;
+	width: 0;
+	height: 0;
+	overflow: hidden;
+	z-index: -1;
+}
+
 @media (min-width: 324px) {
 	.mobileAd {
 		border: 1px solid #ccc;
