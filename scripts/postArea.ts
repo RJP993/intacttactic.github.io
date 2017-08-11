@@ -25,6 +25,8 @@ class PostArea {
 	private rawPreviewsToLoadCount: number;
 	private matches: string[];
 	private postsData: PostData[];
+	private outstandingLoads = 0;
+	private loadCompletedThroughExistingMemory = false
 
 	private previewsInMemory: PostObject[] = [];
 
@@ -43,7 +45,7 @@ class PostArea {
 
 	public load(skipPreLoad = false, startIndex = 0): void {
 		this.emptyPage();
-
+		
 		const pageIcons = this.pageIconContainer.children;
 		if (pageIcons.length > 0) {
 			this.pageIconContainer.children[this.activePageIndex].classList.remove("pageIcon-active");
@@ -71,16 +73,22 @@ class PostArea {
 
 		this.resultsFound.classList.add("hidden");
 		this.pageIconContainer.innerHTML = "";
+		
+		this.rawPreviewsToLoadCount = this.rawPreviewsToLoadCount = this.postsData.length;
+		this.previewsToLoadCount = this.rawPreviewsToLoadCount >= PostArea.POST_LOAD_COUNT ? PostArea.POST_LOAD_COUNT : this.rawPreviewsToLoadCount;
+		this.loadCompletedThroughExistingMemory = false;
 	}
 
 	private preLoad(): void {
-		const rawPreviewsToLoadCount = this.rawPreviewsToLoadCount = this.postsData.length;
-		this.previewsToLoadCount = rawPreviewsToLoadCount >= PostArea.POST_LOAD_COUNT ? PostArea.POST_LOAD_COUNT : rawPreviewsToLoadCount;
-
 		const rawSearchTerm = window.location.search.substring(1).toLowerCase();
-		const searchTerms = rawSearchTerm.split("%20");
+		let searchTerms: string[] = [];
+		if (rawSearchTerm) {
+			searchTerms = rawSearchTerm.split("%20");
+		}
+		
 		this.matches = [];
-		for (let i = 0; i < rawPreviewsToLoadCount; i++) {
+		let searchAdjustedPreviewsToLoadCount = this.rawPreviewsToLoadCount;
+		for (let i = 0; i < this.rawPreviewsToLoadCount; i++) {
 			if (!this.postsData[i]) {
 				return;
 			}
@@ -105,21 +113,30 @@ class PostArea {
 			}
 			
 			if (!matchFound) {
-				this.previewsLoadedCount++;
-				if (this.previewsLoadedCount >= this.rawPreviewsToLoadCount) {
+				searchAdjustedPreviewsToLoadCount--;
+				if (this.previewsLoadedCount >= searchAdjustedPreviewsToLoadCount) {
 					this.handleAfterPreviewLoad();
 				}
 				
 				continue;
 			}
 
-			this.matches.push(this.postsData[i].filename + ".html");
+			this.matches.unshift(this.postsData[i].filename + ".html");
 		}
 	}
 
 	private requestContent(startIndex: number): void {
 		for (let i = startIndex; i < startIndex + PostArea.POST_LOAD_COUNT; i++) {
+			if (this.loadCompletedThroughExistingMemory) {
+				return;
+			}
+			
 			if (!this.matches[i]) {
+				this.previewsToLoadCount = i - startIndex;
+				if (this.outstandingLoads === 0 && this.previewsLoadedCount >= this.previewsToLoadCount) {
+					this.handleAfterPreviewLoad();
+				}
+
 				return;
 			}
 			
@@ -134,14 +151,18 @@ class PostArea {
 			if (previewFoundInMemory) {
 				this.loadPreviews(previewFoundInMemory.html, i, i - startIndex);
 			} else {
-				this.httpRequest(PostArea.PREVIEWS_DIRECTORY + this.matches[i], (response: string) => this.loadPreviews(response, i, i - startIndex, this.matches[i]));
+				this.outstandingLoads++;
+				this.httpRequest(PostArea.PREVIEWS_DIRECTORY + this.matches[i], (response: string) => {
+					this.loadPreviews(response, i, i - startIndex, this.matches[i]);
+					this.outstandingLoads--;
+				});
 			}
 		}
 	}
 
 	private loadPreviews(html: string, rawIndex: number, index: number, filename?: string): void {
 		if (filename) {
-			this.previewsInMemory.push({filename: filename, html: html});
+			this.previewsInMemory.unshift({filename: filename, html: html});
 		}
 
 		const postWrapper = document.createElement("div");
@@ -159,11 +180,12 @@ class PostArea {
 		footer.innerText = "Read More";
 		postWrapper.appendChild(footer);
 		
-		this.loadedPreviews.push({element: postWrapper, i: index});
+		this.loadedPreviews.unshift({element: postWrapper, i: index});
 		this.previewsLoadedCount++;
 
 		if (this.previewsLoadedCount >= this.previewsToLoadCount) {
 			this.handleAfterPreviewLoad();
+			this.loadCompletedThroughExistingMemory = true;
 		}
 	}
 
@@ -171,7 +193,7 @@ class PostArea {
 		this.postsLoadingIcon.remove();
 
 		for (const loadedPreview of this.loadedPreviews) {
-			this.postContainers[this.postContainers.length - 1 - loadedPreview.i].appendChild(loadedPreview.element);
+			this.postContainers[loadedPreview.i].appendChild(loadedPreview.element);
 		}
 
 		const footers = document.getElementsByClassName("postFooter");

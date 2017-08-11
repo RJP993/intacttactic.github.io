@@ -336,10 +336,12 @@ body:after {
 	
 	.main {
 		display: flex;
+		overflow-x: hidden;
 	}
 
 	.twitterWrapper {
 		display: block;
+		flex-shrink: 0;
 	}
 	
 	.verticalSeperator-left {
@@ -358,6 +360,7 @@ body:after {
 
 	.ads {
 		display: block;
+		flex-shrink: 0;
 	}
 
 	.tabletAd {

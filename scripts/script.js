@@ -82,6 +82,8 @@ var PostArea = (function () {
         this.postsLoadingIcon = new LoadingIcon(this.posts);
         this.activePageIndex = 0;
         this.previewsLoadedCount = 0;
+        this.outstandingLoads = 0;
+        this.loadCompletedThroughExistingMemory = false;
         this.previewsInMemory = [];
         for (var i = 0; i < PostArea.POST_LOAD_COUNT; i++) {
             var container = document.createElement("div");
@@ -121,14 +123,19 @@ var PostArea = (function () {
         }
         this.resultsFound.classList.add("hidden");
         this.pageIconContainer.innerHTML = "";
+        this.rawPreviewsToLoadCount = this.rawPreviewsToLoadCount = this.postsData.length;
+        this.previewsToLoadCount = this.rawPreviewsToLoadCount >= PostArea.POST_LOAD_COUNT ? PostArea.POST_LOAD_COUNT : this.rawPreviewsToLoadCount;
+        this.loadCompletedThroughExistingMemory = false;
     };
     PostArea.prototype.preLoad = function () {
-        var rawPreviewsToLoadCount = this.rawPreviewsToLoadCount = this.postsData.length;
-        this.previewsToLoadCount = rawPreviewsToLoadCount >= PostArea.POST_LOAD_COUNT ? PostArea.POST_LOAD_COUNT : rawPreviewsToLoadCount;
         var rawSearchTerm = window.location.search.substring(1).toLowerCase();
-        var searchTerms = rawSearchTerm.split("%20");
+        var searchTerms = [];
+        if (rawSearchTerm) {
+            searchTerms = rawSearchTerm.split("%20");
+        }
         this.matches = [];
-        for (var i = 0; i < rawPreviewsToLoadCount; i++) {
+        var searchAdjustedPreviewsToLoadCount = this.rawPreviewsToLoadCount;
+        for (var i = 0; i < this.rawPreviewsToLoadCount; i++) {
             if (!this.postsData[i]) {
                 return;
             }
@@ -150,19 +157,26 @@ var PostArea = (function () {
                 }
             }
             if (!matchFound) {
-                this.previewsLoadedCount++;
-                if (this.previewsLoadedCount >= this.rawPreviewsToLoadCount) {
+                searchAdjustedPreviewsToLoadCount--;
+                if (this.previewsLoadedCount >= searchAdjustedPreviewsToLoadCount) {
                     this.handleAfterPreviewLoad();
                 }
                 continue;
             }
-            this.matches.push(this.postsData[i].filename + ".html");
+            this.matches.unshift(this.postsData[i].filename + ".html");
         }
     };
     PostArea.prototype.requestContent = function (startIndex) {
         var _this = this;
         var _loop_1 = function (i) {
+            if (this_1.loadCompletedThroughExistingMemory) {
+                return { value: void 0 };
+            }
             if (!this_1.matches[i]) {
+                this_1.previewsToLoadCount = i - startIndex;
+                if (this_1.outstandingLoads === 0 && this_1.previewsLoadedCount >= this_1.previewsToLoadCount) {
+                    this_1.handleAfterPreviewLoad();
+                }
                 return { value: void 0 };
             }
             var previewFoundInMemory = void 0;
@@ -177,7 +191,11 @@ var PostArea = (function () {
                 this_1.loadPreviews(previewFoundInMemory.html, i, i - startIndex);
             }
             else {
-                this_1.httpRequest(PostArea.PREVIEWS_DIRECTORY + this_1.matches[i], function (response) { return _this.loadPreviews(response, i, i - startIndex, _this.matches[i]); });
+                this_1.outstandingLoads++;
+                this_1.httpRequest(PostArea.PREVIEWS_DIRECTORY + this_1.matches[i], function (response) {
+                    _this.loadPreviews(response, i, i - startIndex, _this.matches[i]);
+                    _this.outstandingLoads--;
+                });
             }
         };
         var this_1 = this;
@@ -189,7 +207,7 @@ var PostArea = (function () {
     };
     PostArea.prototype.loadPreviews = function (html, rawIndex, index, filename) {
         if (filename) {
-            this.previewsInMemory.push({ filename: filename, html: html });
+            this.previewsInMemory.unshift({ filename: filename, html: html });
         }
         var postWrapper = document.createElement("div");
         postWrapper.classList.add("postWrapper");
@@ -202,10 +220,11 @@ var PostArea = (function () {
         footer.classList.add("postFooter");
         footer.innerText = "Read More";
         postWrapper.appendChild(footer);
-        this.loadedPreviews.push({ element: postWrapper, i: index });
+        this.loadedPreviews.unshift({ element: postWrapper, i: index });
         this.previewsLoadedCount++;
         if (this.previewsLoadedCount >= this.previewsToLoadCount) {
             this.handleAfterPreviewLoad();
+            this.loadCompletedThroughExistingMemory = true;
         }
     };
     PostArea.prototype.handleAfterPreviewLoad = function () {
@@ -213,7 +232,7 @@ var PostArea = (function () {
         this.postsLoadingIcon.remove();
         for (var _i = 0, _a = this.loadedPreviews; _i < _a.length; _i++) {
             var loadedPreview = _a[_i];
-            this.postContainers[this.postContainers.length - 1 - loadedPreview.i].appendChild(loadedPreview.element);
+            this.postContainers[loadedPreview.i].appendChild(loadedPreview.element);
         }
         var footers = document.getElementsByClassName("postFooter");
         var _loop_2 = function (i) {
