@@ -95,7 +95,7 @@
 	}
 
 	.tabIcon {
-		padding-left: initial;
+		padding-left: 0;
 		padding-right: 4px;
 	}
 }
@@ -110,11 +110,11 @@
 	}
 
 	.topBarWrapper-fixed > .rightSideWrapper > .topBar > .nav > .tab > .tabText {
-		display: initial;
+		display: inline;
 	}
 
 	.topBarWrapper-fixed > .rightSideWrapper > .topBar > .nav > .tab > .tabIcon {
-	    	padding-left: initial;
+	    	padding-left: 0;
     		padding-right: 4px;
 	}
 }
