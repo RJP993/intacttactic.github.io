@@ -337,6 +337,7 @@ body:after {
 	.main {
 		display: flex;
 		overflow-x: hidden;
+		overflow-y; hidden;
 	}
 
 	.twitterWrapper {
