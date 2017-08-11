@@ -18,7 +18,7 @@ class NavBar {
 					targetElement = targetElement.parentElement;	
 				}
 
-				window.location.href = "#content";
+				window.location.href = "#c";
 				window.location.search = "";
 				this.setActiveTab(targetElement);
 			});	

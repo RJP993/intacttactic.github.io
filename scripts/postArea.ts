@@ -45,10 +45,17 @@ class PostArea {
 
 	public load(skipPreLoad = false, startIndex = 0): void {
 		this.emptyPage();
-		
-		const pageIcons = this.pageIconContainer.children;
-		if (pageIcons.length > 0) {
-			this.pageIconContainer.children[this.activePageIndex].classList.remove("pageIcon-active");
+
+		const queryString = window.location.search;
+		if (queryString.indexOf("d=") === 1) {
+			const link =  window.location.search.substring(3).toLowerCase();
+			for (const post of this.postsData) {
+				if (post.filename === link) {
+					this.httpRequest(PostArea.PREVIEWS_DIRECTORY + post.filename + ".html", (response: string) => this.loadDirectPost(response, post.filename));
+				}
+			}
+
+			return; // Its a direct link so standard setup is not required
 		}
 
 		if (!skipPreLoad) {
@@ -80,7 +87,8 @@ class PostArea {
 	}
 
 	private preLoad(): void {
-		const rawSearchTerm = window.location.search.substring(1).toLowerCase();
+		const rawSearchTerm = window.location.search.substring(3).toLowerCase();
+		
 		let searchTerms: string[] = [];
 		if (rawSearchTerm) {
 			searchTerms = rawSearchTerm.split("%20");
@@ -205,29 +213,7 @@ class PostArea {
 		const links = document.getElementsByClassName("postHeaderLink");
 		for (let i = 0; i < links.length; i++) {
 			const linkElement = links[i] as HTMLElement;
-			linkElement.addEventListener("click", () => {
-				const hiddenInputElement = linkElement.parentElement.parentElement.lastElementChild as HTMLInputElement;
-
-				if (Browser.IS_IOS) {	
-					prompt("Copy the link below:", hiddenInputElement.value);
-				}
-				else {
-					hiddenInputElement.classList.remove("hiddenInput");
-					hiddenInputElement.select();	
-					document.execCommand("copy");
-					hiddenInputElement.classList.add("hiddenInput");
-
-					const text = linkElement.firstElementChild;
-					text.classList.add("hidden");
-
-					const tick = linkElement.lastElementChild;
-					tick.classList.remove("hidden");
-					setTimeout(() => {
-						text.classList.remove("hidden");
-						tick.classList.add("hidden");
-					}, 1000);
-				}
-			});
+			linkElement.addEventListener("click", (e) => this.handleLinkClick(e.target as HTMLElement));
 		}
 
 		const rawPreviewCount = (window.location.search && window.location.search !== "") ? this.matches.length : this.rawPreviewsToLoadCount; 
@@ -248,6 +234,29 @@ class PostArea {
 				this.activePageIndex = +clickedNumber - 1;
 				this.load(true, this.activePageIndex * PostArea.POST_LOAD_COUNT);
 			});
+		}
+	}
+
+	private handleLinkClick(linkElement: HTMLElement): void {
+		const hiddenInputElement = linkElement.parentElement.parentElement.parentElement.lastElementChild as HTMLInputElement;
+
+		if (Browser.IS_IOS) {	
+			prompt("Copy the link below:", hiddenInputElement.value);
+		}
+		else {
+			hiddenInputElement.classList.remove("hiddenInput");
+			hiddenInputElement.select();	
+			document.execCommand("copy");
+			hiddenInputElement.classList.add("hiddenInput");
+
+			linkElement.classList.add("hidden");
+
+			const tick = linkElement.nextElementSibling;
+			tick.classList.remove("hidden");
+			setTimeout(() => {
+				linkElement.classList.remove("hidden");
+				tick.classList.add("hidden");
+			}, 1000);
 		}
 	}
 
@@ -272,6 +281,23 @@ class PostArea {
 
 	private loadPostContent(html: string, postBody: HTMLElement): void {
 		postBody.innerHTML += html;
+	}
+	
+	private loadDirectPost(html: string, filename: string): void {
+		const postWrapper = document.createElement("div");
+		postWrapper.classList.add("postWrapper");	
+		postWrapper.innerHTML += html;
+		
+		const footer = document.createElement("div");
+		footer.classList.add("postFullPageFooter");
+		postWrapper.appendChild(footer);
+		
+		this.postContainers[0].appendChild(postWrapper);
+
+		this.httpRequest(PostArea.POSTS_DIRECTORY + filename + ".html", (response: string) => this.loadPostContent(response, postWrapper.getElementsByClassName("content")[0] as HTMLElement));
+
+		const linkElement = postWrapper.getElementsByClassName("postHeaderLink")[0];
+		linkElement.addEventListener("click", (e) => this.handleLinkClick(e.target as HTMLElement));
 	}
 	
 	private httpRequest(url: string, callback: (response: string) => void): void {

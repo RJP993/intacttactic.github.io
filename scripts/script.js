@@ -96,12 +96,24 @@ var PostArea = (function () {
         this.postsData = postsData;
     };
     PostArea.prototype.load = function (skipPreLoad, startIndex) {
+        var _this = this;
         if (skipPreLoad === void 0) { skipPreLoad = false; }
         if (startIndex === void 0) { startIndex = 0; }
         this.emptyPage();
-        var pageIcons = this.pageIconContainer.children;
-        if (pageIcons.length > 0) {
-            this.pageIconContainer.children[this.activePageIndex].classList.remove("pageIcon-active");
+        var queryString = window.location.search;
+        if (queryString.indexOf("d=") === 1) {
+            var link = window.location.search.substring(3).toLowerCase();
+            var _loop_1 = function (post) {
+                if (post.filename === link) {
+                    this_1.httpRequest(PostArea.PREVIEWS_DIRECTORY + post.filename + ".html", function (response) { return _this.loadDirectPost(response, post.filename); });
+                }
+            };
+            var this_1 = this;
+            for (var _i = 0, _a = this.postsData; _i < _a.length; _i++) {
+                var post = _a[_i];
+                _loop_1(post);
+            }
+            return; // Its a direct link so standard setup is not required
         }
         if (!skipPreLoad) {
             this.activePageIndex = 0;
@@ -128,7 +140,7 @@ var PostArea = (function () {
         this.loadCompletedThroughExistingMemory = false;
     };
     PostArea.prototype.preLoad = function () {
-        var rawSearchTerm = window.location.search.substring(1).toLowerCase();
+        var rawSearchTerm = window.location.search.substring(3).toLowerCase();
         var searchTerms = [];
         if (rawSearchTerm) {
             searchTerms = rawSearchTerm.split("%20");
@@ -168,39 +180,39 @@ var PostArea = (function () {
     };
     PostArea.prototype.requestContent = function (startIndex) {
         var _this = this;
-        var _loop_1 = function (i) {
-            if (this_1.loadCompletedThroughExistingMemory) {
+        var _loop_2 = function (i) {
+            if (this_2.loadCompletedThroughExistingMemory) {
                 return { value: void 0 };
             }
-            if (!this_1.matches[i]) {
-                this_1.previewsToLoadCount = i - startIndex;
-                if (this_1.outstandingLoads === 0 && this_1.previewsLoadedCount >= this_1.previewsToLoadCount) {
-                    this_1.handleAfterPreviewLoad();
+            if (!this_2.matches[i]) {
+                this_2.previewsToLoadCount = i - startIndex;
+                if (this_2.outstandingLoads === 0 && this_2.previewsLoadedCount >= this_2.previewsToLoadCount) {
+                    this_2.handleAfterPreviewLoad();
                 }
                 return { value: void 0 };
             }
             var previewFoundInMemory = void 0;
-            for (var _i = 0, _a = this_1.previewsInMemory; _i < _a.length; _i++) {
+            for (var _i = 0, _a = this_2.previewsInMemory; _i < _a.length; _i++) {
                 var previewInMemory = _a[_i];
-                if (previewInMemory.filename === this_1.matches[i]) {
+                if (previewInMemory.filename === this_2.matches[i]) {
                     previewFoundInMemory = previewInMemory;
                     break;
                 }
             }
             if (previewFoundInMemory) {
-                this_1.loadPreviews(previewFoundInMemory.html, i, i - startIndex);
+                this_2.loadPreviews(previewFoundInMemory.html, i, i - startIndex);
             }
             else {
-                this_1.outstandingLoads++;
-                this_1.httpRequest(PostArea.PREVIEWS_DIRECTORY + this_1.matches[i], function (response) {
+                this_2.outstandingLoads++;
+                this_2.httpRequest(PostArea.PREVIEWS_DIRECTORY + this_2.matches[i], function (response) {
                     _this.loadPreviews(response, i, i - startIndex, _this.matches[i]);
                     _this.outstandingLoads--;
                 });
             }
         };
-        var this_1 = this;
+        var this_2 = this;
         for (var i = startIndex; i < startIndex + PostArea.POST_LOAD_COUNT; i++) {
-            var state_1 = _loop_1(i);
+            var state_1 = _loop_2(i);
             if (typeof state_1 === "object")
                 return state_1.value;
         }
@@ -235,39 +247,17 @@ var PostArea = (function () {
             this.postContainers[loadedPreview.i].appendChild(loadedPreview.element);
         }
         var footers = document.getElementsByClassName("postFooter");
-        var _loop_2 = function (i) {
+        var _loop_3 = function (i) {
             var footerElement = footers[i];
             footerElement.addEventListener("click", function () { return _this.togglePostExpansion(footerElement); });
         };
         for (var i = 0; i < footers.length; i++) {
-            _loop_2(i);
+            _loop_3(i);
         }
         var links = document.getElementsByClassName("postHeaderLink");
-        var _loop_3 = function (i) {
-            var linkElement = links[i];
-            linkElement.addEventListener("click", function () {
-                var hiddenInputElement = linkElement.parentElement.parentElement.lastElementChild;
-                if (Browser.IS_IOS) {
-                    prompt("Copy the link below:", hiddenInputElement.value);
-                }
-                else {
-                    hiddenInputElement.classList.remove("hiddenInput");
-                    hiddenInputElement.select();
-                    document.execCommand("copy");
-                    hiddenInputElement.classList.add("hiddenInput");
-                    var text_1 = linkElement.firstElementChild;
-                    text_1.classList.add("hidden");
-                    var tick_1 = linkElement.lastElementChild;
-                    tick_1.classList.remove("hidden");
-                    setTimeout(function () {
-                        text_1.classList.remove("hidden");
-                        tick_1.classList.add("hidden");
-                    }, 1000);
-                }
-            });
-        };
         for (var i = 0; i < links.length; i++) {
-            _loop_3(i);
+            var linkElement = links[i];
+            linkElement.addEventListener("click", function (e) { return _this.handleLinkClick(e.target); });
         }
         var rawPreviewCount = (window.location.search && window.location.search !== "") ? this.matches.length : this.rawPreviewsToLoadCount;
         var pagesRequiredCount = Math.ceil(rawPreviewCount / PostArea.POST_LOAD_COUNT);
@@ -284,6 +274,25 @@ var PostArea = (function () {
                 _this.activePageIndex = +clickedNumber - 1;
                 _this.load(true, _this.activePageIndex * PostArea.POST_LOAD_COUNT);
             });
+        }
+    };
+    PostArea.prototype.handleLinkClick = function (linkElement) {
+        var hiddenInputElement = linkElement.parentElement.parentElement.parentElement.lastElementChild;
+        if (Browser.IS_IOS) {
+            prompt("Copy the link below:", hiddenInputElement.value);
+        }
+        else {
+            hiddenInputElement.classList.remove("hiddenInput");
+            hiddenInputElement.select();
+            document.execCommand("copy");
+            hiddenInputElement.classList.add("hiddenInput");
+            linkElement.classList.add("hidden");
+            var tick_1 = linkElement.nextElementSibling;
+            tick_1.classList.remove("hidden");
+            setTimeout(function () {
+                linkElement.classList.remove("hidden");
+                tick_1.classList.add("hidden");
+            }, 1000);
         }
     };
     PostArea.prototype.togglePostExpansion = function (footerElement) {
@@ -307,6 +316,19 @@ var PostArea = (function () {
     };
     PostArea.prototype.loadPostContent = function (html, postBody) {
         postBody.innerHTML += html;
+    };
+    PostArea.prototype.loadDirectPost = function (html, filename) {
+        var _this = this;
+        var postWrapper = document.createElement("div");
+        postWrapper.classList.add("postWrapper");
+        postWrapper.innerHTML += html;
+        var footer = document.createElement("div");
+        footer.classList.add("postFullPageFooter");
+        postWrapper.appendChild(footer);
+        this.postContainers[0].appendChild(postWrapper);
+        this.httpRequest(PostArea.POSTS_DIRECTORY + filename + ".html", function (response) { return _this.loadPostContent(response, postWrapper.getElementsByClassName("content")[0]); });
+        var linkElement = postWrapper.getElementsByClassName("postHeaderLink")[0];
+        linkElement.addEventListener("click", function (e) { return _this.handleLinkClick(e.target); });
     };
     PostArea.prototype.httpRequest = function (url, callback) {
         var xmlHttp = new XMLHttpRequest();
@@ -342,7 +364,7 @@ var NavBar = (function () {
                 if (!targetElement.classList.contains("tab")) {
                     targetElement = targetElement.parentElement;
                 }
-                window.location.href = "#content";
+                window.location.href = "#c";
                 window.location.search = "";
                 _this.setActiveTab(targetElement);
             });
@@ -385,8 +407,8 @@ var SearchBar = (function () {
             if (keyCode !== 13) {
                 return;
             }
-            window.location.hash = "#content";
-            window.location.search = _this.searchField.value;
+            window.location.hash = "#c";
+            window.location.search = "s=" + _this.searchField.value;
         });
         // Prevent autoscroll on input focus on iOS
         this.searchField.onfocus = function (e) {

@@ -8,8 +8,8 @@ class SearchBar {
 				return;
 			}
 		
-			window.location.hash = "#content";
-			window.location.search = this.searchField.value;
+			window.location.hash = "#c";
+			window.location.search = "s=" + this.searchField.value;
 		});
 
 		// Prevent autoscroll on input focus on iOS
