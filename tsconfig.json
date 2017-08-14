@@ -1,0 +1,18 @@
+{
+	"compilerOptions": {
+		"noImplicitAny": true,
+		"target": "es5",
+		"outFile": "script.js"
+	},
+	"files": [
+		"posts.ts",
+		"browser.ts",
+		"loadingIcon.ts",
+		"postArea.ts",
+		"navBar.ts",
+		"searchBar.ts",
+		"topBar.ts",
+		"externalScriptLoader.ts",
+		"script.ts"
+	]
+}	
