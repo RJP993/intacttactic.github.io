@@ -19,6 +19,7 @@ var Posts = (function () {
         { filename: "14-08-2017", tags: ["jean", "michael", "seri", "analysis"] },
         { filename: "15-08-2017", tags: ["borussia", "dortmund", "squad", "analysis"] },
         { filename: "16-08-2017", tags: ["pedro", "rodriguez", "analysis"] },
+        { filename: "17-08-2017", tags: ["premier", "league", "table", "prediction", "transfer", "discussion"] },
     ];
     Posts.WRITEUPS = [
         { filename: "03-01-2015", tags: ["underrated", "managers", "part", "1", "unai", "emery"] },
@@ -28,6 +29,7 @@ var Posts = (function () {
         { filename: "12-08-2017", tags: ["serie", "napoli", "time", "title", "juventus", "ac milan", "roma"] },
         { filename: "13-08-2017", tags: ["west", "ham", "short", "term", "improvement"] },
         { filename: "15-08-2017", tags: ["borussia", "dortmund", "squad", "analysis"] },
+        { filename: "17-08-2017", tags: ["premier", "league", "table", "prediction", "transfer", "discussion"] },
     ];
     Posts.PLAYERS = [
         { filename: "04-11-2016", tags: ["shkodran", "mustafi", "good", "bad", "ugly"] },

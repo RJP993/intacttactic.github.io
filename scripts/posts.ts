@@ -17,6 +17,7 @@ class Posts {
 		{ filename: "14-08-2017", tags: ["jean", "michael", "seri", "analysis"] },
 		{ filename: "15-08-2017", tags: ["borussia", "dortmund", "squad", "analysis"] },
 		{ filename: "16-08-2017", tags: ["pedro", "rodriguez", "analysis"] },
+		{ filename: "17-08-2017", tags: ["premier", "league", "table", "prediction", "transfer", "discussion"] },
 	];
 
 	public static readonly WRITEUPS = [
@@ -27,6 +28,7 @@ class Posts {
 		{ filename: "12-08-2017", tags: ["serie", "napoli", "time", "title", "juventus", "ac milan", "roma"] },
 		{ filename: "13-08-2017", tags: ["west", "ham", "short", "term", "improvement"] },
 		{ filename: "15-08-2017", tags: ["borussia", "dortmund", "squad", "analysis"] },
+		{ filename: "17-08-2017", tags: ["premier", "league", "table", "prediction", "transfer", "discussion"] },
 	];
 
 	public static readonly PLAYERS = [

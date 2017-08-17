@@ -247,6 +247,10 @@ body:after {
 	z-index: -1;
 }
 
+.bold {
+	font-weight: bold;
+}
+
 @media (min-width: 324px) {
 	.mobileAd {
 		border: 1px solid #ccc;

@@ -224,6 +224,10 @@
 	   	margin-right: auto;
 	}
 	
+	.image.portraitImage {
+		max-width: 70%;
+	}
+
 	.introImage {
 		display: table-cell;
 		width: 220px;
