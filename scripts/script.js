@@ -20,6 +20,7 @@ var Posts = (function () {
         { filename: "15-08-2017", tags: ["borussia", "dortmund", "squad", "analysis"] },
         { filename: "16-08-2017", tags: ["pedro", "rodriguez", "analysis"] },
         { filename: "17-08-2017", tags: ["premier", "league", "table", "prediction", "transfer", "discussion"] },
+        { filename: "23-08-2017", tags: ["alex", "oxlade", "chamberlain", "ox", "anlysis"] },
     ];
     Posts.WRITEUPS = [
         { filename: "03-01-2015", tags: ["underrated", "managers", "part", "1", "unai", "emery"] },
@@ -36,6 +37,7 @@ var Posts = (function () {
         { filename: "12-08-2017-2", tags: ["bernardo", "silva", "analysis"] },
         { filename: "14-08-2017", tags: ["jean", "michael", "seri", "analysis"] },
         { filename: "16-08-2017", tags: ["pedro", "rodriguez", "analysis"] },
+        { filename: "23-08-2017", tags: ["alex", "oxlade", "chamberlain", "ox", "anlysis"] },
     ];
     Posts.BETTING = [
         { filename: "", tags: [""] }
