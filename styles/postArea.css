@@ -8,6 +8,7 @@
 
 .postTitleWrapper {
 	display: flex;
+	flex-direction: column;
 }
 
 .postHeader {
@@ -19,15 +20,19 @@
 
 .postHeaderTitle {
 	font-size: 20px;
+	margin-bottom: 4px;
     	white-space: nowrap;
     	overflow: hidden;
     	text-overflow: ellipsis;
 }
 
+.postHeaderSubtitle {
+	font-style: italic;
+}
+
 .postSubtitleWrapper {
 	display: table;
 	width: 100%;
-	margin-top: 4px;
 }
 
 .postHeaderDate {
