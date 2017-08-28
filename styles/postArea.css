@@ -6,38 +6,44 @@
 	max-height: none;
 }
 
-.postTitleWrapper {
-	display: flex;
-	flex-direction: column;
-}
-
 .postHeader {
+	display: flex;
 	position: relative;
 	padding: 8px;
 	color: #fff;
 	background-color: #b22222;
 }
 
+.postHeaderLSWrapper {
+	display: inline-block;
+	flex-grow: 1;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
 .postHeaderTitle {
 	font-size: 20px;
-	margin-bottom: 4px;
-    	white-space: nowrap;
     	overflow: hidden;
     	text-overflow: ellipsis;
 }
 
 .postHeaderSubtitle {
+	line-height: 22px;
 	font-style: italic;
+    	overflow: hidden;
+    	text-overflow: ellipsis;
 }
 
-.postSubtitleWrapper {
-	display: table;
-	width: 100%;
+.postHeaderRSWrapper {
+    	display: inline-block;
+    	vertical-align: top;
+    	text-align: right;
+    	min-width: 100px;
 }
 
 .postHeaderDate {
-	display: table-cell;
-	width: 100%;
+	width: 100px;
+	line-height: 24px;
 }
 
 .postHeaderLink {
