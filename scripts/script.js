@@ -23,6 +23,7 @@ var Posts = (function () {
         { filename: "23-08-2017", tags: ["alex", "oxlade", "chamberlain", "ox", "analysis", "dribbling", "without", "plan"] },
         { filename: "25-08-2017", tags: ["ben", "gibson", "analysis", "england", "best", "central", "defender"] },
         { filename: "27-08-2017", tags: ["chelsea", "everton", "tactical", "analysis", "gueye", "no-man", "land"] },
+        { filename: "07-09-2017", tags: ["analysing", "centre", "backs", "part", "1", "front", "foot", "defending", "biggest", "misconception"] },
     ];
     Posts.WRITEUPS = [
         { filename: "03-01-2015", tags: ["underrated", "managers", "part", "1", "unai", "emery", "simplicity", "scouting"] },
@@ -34,6 +35,7 @@ var Posts = (function () {
         { filename: "15-08-2017", tags: ["borussia", "dortmund", "analysis", "win", "anything", "kids"] },
         { filename: "17-08-2017", tags: ["premier", "league", "table", "prediction", "transfer", "discussion", "miss", "big", "sam"] },
         { filename: "27-08-2017", tags: ["chelsea", "everton", "tactical", "analysis", "gueye", "no-man", "land"] },
+        { filename: "07-09-2017", tags: ["analysing", "centre", "backs", "part", "1", "front", "foot", "defending", "biggest", "misconception"] },
     ];
     Posts.PLAYERS = [
         { filename: "04-11-2016", tags: ["shkodran", "mustafi", "in-depth", "analysis", "good", "bad", "ugly"] },
