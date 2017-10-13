@@ -3,8 +3,12 @@ class SearchBar {
 
 	constructor() {
 		const rawSearch = window.location.search;
-		const fixedSearch = rawSearch.replace("?s=", "").split("%20").join(" ");
-		this.searchField.value = fixedSearch;
+		let fixedSearch = rawSearch.replace("?s=", "").split("%20").join(" ");
+	
+		const isDirectLink = fixedSearch.indexOf("d=") === 1;
+		if (!isDirectLink) {
+			this.searchField.value = fixedSearch;
+		}
 
 		this.searchField.addEventListener("keypress", (e: KeyboardEvent) => {
 			const keyCode = e.which || e.keyCode;

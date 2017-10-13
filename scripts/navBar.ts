@@ -20,6 +20,9 @@ class NavBar {
 
 				window.location.hash = "#c";
 				this.setActiveTab(targetElement);
+				
+				const wasDirectLink = window.location.search.indexOf("d=") === 1;
+				window.location.search = "";
 			});	
 		}
 

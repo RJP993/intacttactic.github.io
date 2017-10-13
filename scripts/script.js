@@ -51,7 +51,7 @@ var Posts = /** @class */ (function () {
     Posts.BETTING = [
         //{ filename: "b25-09-2017", tags: [""] },
         // New betting posts must go before this but after the next highest up one
-        { filename: "30-09-2017", tags: [""] }
+        { filename: "broll", tags: [""] }
     ];
     return Posts;
 }());
@@ -407,6 +407,8 @@ var NavBar = /** @class */ (function () {
                 }
                 window.location.hash = "#c";
                 _this.setActiveTab(targetElement);
+                var wasDirectLink = window.location.search.indexOf("d=") === 1;
+                window.location.search = "";
             });
         }
         this.setActiveTab(this.allTab);
@@ -446,7 +448,10 @@ var SearchBar = /** @class */ (function () {
         this.searchField = document.getElementsByClassName("searchField")[0];
         var rawSearch = window.location.search;
         var fixedSearch = rawSearch.replace("?s=", "").split("%20").join(" ");
-        this.searchField.value = fixedSearch;
+        var isDirectLink = fixedSearch.indexOf("d=") === 1;
+        if (!isDirectLink) {
+            this.searchField.value = fixedSearch;
+        }
         this.searchField.addEventListener("keypress", function (e) {
             var keyCode = e.which || e.keyCode;
             if (keyCode !== 13) {

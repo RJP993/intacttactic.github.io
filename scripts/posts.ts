@@ -53,6 +53,6 @@ class Posts {
 		//{ filename: "b25-09-2017", tags: [""] },
 
 		// New betting posts must go before this but after the next highest up one
-		{ filename: "30-09-2017", tags: [""] }
+		{ filename: "broll", tags: [""] }
 	];
 }
