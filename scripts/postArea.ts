@@ -30,6 +30,8 @@ class PostArea {
 
 	private previewsInMemory: PostObject[] = [];
 
+	private isBettingPage: boolean;
+
 	constructor() {
 		for (let i = 0; i < PostArea.POST_LOAD_COUNT; i++) {
 			const container = document.createElement("div");
@@ -39,8 +41,9 @@ class PostArea {
 		}
 	}
 
-	public setPostsData(postsData: PostData[]): void {
+	public setPostsData(postsData: PostData[], isBettingPage = false): void {
 		this.postsData = postsData;
+		this.isBettingPage = isBettingPage;
 	}
 
 	public load(skipPreLoad = false, startIndex = 0): void {
@@ -48,8 +51,11 @@ class PostArea {
 
 		const queryString = window.location.search;
 		if (queryString.indexOf("d=") === 1) {
+			const isBettingPageLink = queryString.indexOf("d=b") === 1;
+			const postSource = isBettingPageLink ? Posts.BETTING : this.postsData;
+
 			const link =  window.location.search.substring(3).toLowerCase();
-			for (const post of this.postsData) {
+			for (const post of postSource) {
 				if (post.filename === link) {
 					this.httpRequest(PostArea.PREVIEWS_DIRECTORY + post.filename + ".html", (response: string) => this.loadDirectPost(response, post.filename));
 				}
@@ -100,7 +106,7 @@ class PostArea {
 			if (!this.postsData[i]) {
 				return;
 			}
-
+			
 			let matchFound = true;
 
 			for (const searchTerm of searchTerms) {
@@ -182,12 +188,18 @@ class PostArea {
 		postWrapper.appendChild(indexElement);
 		
 		postWrapper.innerHTML += html;
-		
+
+		// Betting page does not have a proper footer as the posts are pre-expanded
 		const footer = document.createElement("div");
-		footer.classList.add("postFooter");
-		footer.innerText = "Read More";
+		if (!this.isBettingPage) {
+			footer.classList.add("postFooter");
+			footer.innerText = "Read More";
+		}	
+		else {
+			footer.classList.add("postFullPageFooter");
+		}
 		postWrapper.appendChild(footer);
-		
+
 		this.loadedPreviews.unshift({element: postWrapper, i: index});
 		this.previewsLoadedCount++;
 
@@ -204,12 +216,15 @@ class PostArea {
 			this.postContainers[loadedPreview.i].appendChild(loadedPreview.element);
 		}
 
-		const footers = document.getElementsByClassName("postFooter");
-		for (let i = 0; i < footers.length; i++) {
-			const footerElement = footers[i] as HTMLElement;
-			footerElement.addEventListener("click", () => this.togglePostExpansion(footerElement));
-		}	
-		
+		// Betting page is pre-expanded
+		if (!this.isBettingPage) {
+			const footers = document.getElementsByClassName("postFooter");
+			for (let i = 0; i < footers.length; i++) {
+				const footerElement = footers[i] as HTMLElement;
+				footerElement.addEventListener("click", () => this.togglePostExpansion(footerElement));
+			}	
+		}
+
 		const links = document.getElementsByClassName("postHeaderLink");
 		for (let i = 0; i < links.length; i++) {
 			const linkElement = links[i] as HTMLElement;
@@ -293,8 +308,9 @@ class PostArea {
 		postWrapper.appendChild(footer);
 		
 		this.postContainers[0].appendChild(postWrapper);
-
-		this.httpRequest(PostArea.POSTS_DIRECTORY + filename + ".html", (response: string) => this.loadPostContent(response, postWrapper.getElementsByClassName("content")[0] as HTMLElement));
+		
+		const directory = this.isBettingPage ? PostArea.PREVIEWS_DIRECTORY : PostArea.POSTS_DIRECTORY;
+		this.httpRequest(directory + filename + ".html", (response: string) => this.loadPostContent(response, postWrapper.getElementsByClassName("content")[0] as HTMLElement));
 
 		const linkElement = postWrapper.getElementsByClassName("postHeaderLink")[0];
 		linkElement.addEventListener("click", (e) => this.handleLinkClick(e.target as HTMLElement));

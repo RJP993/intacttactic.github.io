@@ -1,9 +1,9 @@
-var PostData = (function () {
+var PostData = /** @class */ (function () {
     function PostData() {
     }
     return PostData;
 }());
-var Posts = (function () {
+var Posts = /** @class */ (function () {
     function Posts() {
     }
     Posts.ALL = [
@@ -25,6 +25,7 @@ var Posts = (function () {
         { filename: "27-08-2017", tags: ["chelsea", "everton", "tactical", "analysis", "gueye", "no-man", "land"] },
         { filename: "07-09-2017", tags: ["analysing", "centre", "backs", "part", "1", "front", "foot", "defending", "biggest", "misconception"] },
         { filename: "11-09-2017", tags: ["analysing", "centre", "backs", "part", "2", "ball", "playing", "risk", "vs", "reward"] },
+        { filename: "13-10-2017", tags: ["site", "changes", "betting", "players"] },
     ];
     Posts.WRITEUPS = [
         { filename: "03-01-2015", tags: ["underrated", "managers", "part", "1", "unai", "emery", "simplicity", "scouting"] },
@@ -48,11 +49,13 @@ var Posts = (function () {
         { filename: "25-08-2017", tags: ["ben", "gibson", "analysis", "england", "best", "central", "defender"] },
     ];
     Posts.BETTING = [
-        { filename: "", tags: [""] }
+        //{ filename: "b25-09-2017", tags: [""] },
+        // New betting posts must go before this but after the next highest up one
+        { filename: "30-09-2017", tags: [""] }
     ];
     return Posts;
 }());
-var Browser = (function () {
+var Browser = /** @class */ (function () {
     function Browser() {
     }
     Browser.IS_OPERA = window.navigator.userAgent.indexOf("OPR") > -1;
@@ -62,7 +65,7 @@ var Browser = (function () {
     Browser.IS_CHROME = window.chrome !== null && window.chrome !== undefined && window.navigator.vendor === "Google Inc." && !Browser.IS_OPERA && !Browser.IS_EDGE;
     return Browser;
 }());
-var LoadingIcon = (function () {
+var LoadingIcon = /** @class */ (function () {
     function LoadingIcon(parentElement) {
         this.parentElement = parentElement;
         var wrapper = this.wrapper = document.createElement("div");
@@ -91,12 +94,12 @@ var LoadingIcon = (function () {
     };
     return LoadingIcon;
 }());
-var PostObject = (function () {
+var PostObject = /** @class */ (function () {
     function PostObject() {
     }
     return PostObject;
 }());
-var PostArea = (function () {
+var PostArea = /** @class */ (function () {
     function PostArea() {
         this.posts = document.getElementsByClassName("posts")[0];
         this.secondMobileAd = document.getElementsByClassName("mobileAdWrapper")[1];
@@ -116,8 +119,10 @@ var PostArea = (function () {
             this.postContainers.push(container);
         }
     }
-    PostArea.prototype.setPostsData = function (postsData) {
+    PostArea.prototype.setPostsData = function (postsData, isBettingPage) {
+        if (isBettingPage === void 0) { isBettingPage = false; }
         this.postsData = postsData;
+        this.isBettingPage = isBettingPage;
     };
     PostArea.prototype.load = function (skipPreLoad, startIndex) {
         var _this = this;
@@ -126,6 +131,8 @@ var PostArea = (function () {
         this.emptyPage();
         var queryString = window.location.search;
         if (queryString.indexOf("d=") === 1) {
+            var isBettingPageLink = queryString.indexOf("d=b") === 1;
+            var postSource = isBettingPageLink ? Posts.BETTING : this.postsData;
             var link = window.location.search.substring(3).toLowerCase();
             var _loop_1 = function (post) {
                 if (post.filename === link) {
@@ -133,8 +140,8 @@ var PostArea = (function () {
                 }
             };
             var this_1 = this;
-            for (var _i = 0, _a = this.postsData; _i < _a.length; _i++) {
-                var post = _a[_i];
+            for (var _i = 0, postSource_1 = postSource; _i < postSource_1.length; _i++) {
+                var post = postSource_1[_i];
                 _loop_1(post);
             }
             return; // Its a direct link so standard setup is not required
@@ -252,9 +259,15 @@ var PostArea = (function () {
         indexElement.innerText = rawIndex.toString();
         postWrapper.appendChild(indexElement);
         postWrapper.innerHTML += html;
+        // Betting page does not have a proper footer as the posts are pre-expanded
         var footer = document.createElement("div");
-        footer.classList.add("postFooter");
-        footer.innerText = "Read More";
+        if (!this.isBettingPage) {
+            footer.classList.add("postFooter");
+            footer.innerText = "Read More";
+        }
+        else {
+            footer.classList.add("postFullPageFooter");
+        }
         postWrapper.appendChild(footer);
         this.loadedPreviews.unshift({ element: postWrapper, i: index });
         this.previewsLoadedCount++;
@@ -270,13 +283,16 @@ var PostArea = (function () {
             var loadedPreview = _a[_i];
             this.postContainers[loadedPreview.i].appendChild(loadedPreview.element);
         }
-        var footers = document.getElementsByClassName("postFooter");
-        var _loop_3 = function (i) {
-            var footerElement = footers[i];
-            footerElement.addEventListener("click", function () { return _this.togglePostExpansion(footerElement); });
-        };
-        for (var i = 0; i < footers.length; i++) {
-            _loop_3(i);
+        // Betting page is pre-expanded
+        if (!this.isBettingPage) {
+            var footers = document.getElementsByClassName("postFooter");
+            var _loop_3 = function (i) {
+                var footerElement = footers[i];
+                footerElement.addEventListener("click", function () { return _this.togglePostExpansion(footerElement); });
+            };
+            for (var i = 0; i < footers.length; i++) {
+                _loop_3(i);
+            }
         }
         var links = document.getElementsByClassName("postHeaderLink");
         for (var i = 0; i < links.length; i++) {
@@ -350,7 +366,8 @@ var PostArea = (function () {
         footer.classList.add("postFullPageFooter");
         postWrapper.appendChild(footer);
         this.postContainers[0].appendChild(postWrapper);
-        this.httpRequest(PostArea.POSTS_DIRECTORY + filename + ".html", function (response) { return _this.loadPostContent(response, postWrapper.getElementsByClassName("content")[0]); });
+        var directory = this.isBettingPage ? PostArea.PREVIEWS_DIRECTORY : PostArea.POSTS_DIRECTORY;
+        this.httpRequest(directory + filename + ".html", function (response) { return _this.loadPostContent(response, postWrapper.getElementsByClassName("content")[0]); });
         var linkElement = postWrapper.getElementsByClassName("postHeaderLink")[0];
         linkElement.addEventListener("click", function (e) { return _this.handleLinkClick(e.target); });
     };
@@ -372,7 +389,7 @@ var PostArea = (function () {
     PostArea.POST_LOAD_COUNT = 5;
     return PostArea;
 }());
-var NavBar = (function () {
+var NavBar = /** @class */ (function () {
     function NavBar() {
         var _this = this;
         this.tabs = document.getElementsByClassName("tab");
@@ -388,8 +405,7 @@ var NavBar = (function () {
                 if (!targetElement.classList.contains("tab")) {
                     targetElement = targetElement.parentElement;
                 }
-                window.location.href = "#c";
-                window.location.search = "";
+                window.location.hash = "#c";
                 _this.setActiveTab(targetElement);
             });
         }
@@ -404,6 +420,7 @@ var NavBar = (function () {
         }
         clickedTab.classList.add("tab-active");
         this.activeTab = clickedTab;
+        var isBettingPage = false;
         var postsData = [];
         if (clickedTab === this.allTab) {
             postsData = Posts.ALL;
@@ -416,16 +433,20 @@ var NavBar = (function () {
         }
         else if (clickedTab === this.bettingTab) {
             postsData = Posts.BETTING;
+            isBettingPage = true;
         }
-        this.postArea.setPostsData(postsData);
+        this.postArea.setPostsData(postsData, isBettingPage);
         this.postArea.load();
     };
     return NavBar;
 }());
-var SearchBar = (function () {
+var SearchBar = /** @class */ (function () {
     function SearchBar() {
         var _this = this;
         this.searchField = document.getElementsByClassName("searchField")[0];
+        var rawSearch = window.location.search;
+        var fixedSearch = rawSearch.replace("?s=", "").split("%20").join(" ");
+        this.searchField.value = fixedSearch;
         this.searchField.addEventListener("keypress", function (e) {
             var keyCode = e.which || e.keyCode;
             if (keyCode !== 13) {
@@ -441,7 +462,7 @@ var SearchBar = (function () {
     }
     return SearchBar;
 }());
-var TopBar = (function () {
+var TopBar = /** @class */ (function () {
     function TopBar() {
         var _this = this;
         this.nav = document.getElementsByClassName("nav")[0];
@@ -539,7 +560,7 @@ var TopBar = (function () {
     TopBar.OPACITY_THRESHOLD = 0.05;
     return TopBar;
 }());
-var ExternalScriptLoader = (function () {
+var ExternalScriptLoader = /** @class */ (function () {
     function ExternalScriptLoader() {
         var _this = this;
         this.isSmallMobileAdLoaded = false;
@@ -615,7 +636,7 @@ var ExternalScriptLoader = (function () {
     ExternalScriptLoader.LARGE_MOBILE_THRESHOLD = 728;
     return ExternalScriptLoader;
 }());
-var Website = (function () {
+var Website = /** @class */ (function () {
     function Website() {
         new NavBar();
         new SearchBar();

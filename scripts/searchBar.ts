@@ -2,6 +2,10 @@ class SearchBar {
 	private searchField: HTMLInputElement = document.getElementsByClassName("searchField")[0] as HTMLInputElement;
 
 	constructor() {
+		const rawSearch = window.location.search;
+		const fixedSearch = rawSearch.replace("?s=", "").split("%20").join(" ");
+		this.searchField.value = fixedSearch;
+
 		this.searchField.addEventListener("keypress", (e: KeyboardEvent) => {
 			const keyCode = e.which || e.keyCode;
 			if (keyCode !== 13) {

@@ -18,8 +18,7 @@ class NavBar {
 					targetElement = targetElement.parentElement;	
 				}
 
-				window.location.href = "#c";
-				window.location.search = "";
+				window.location.hash = "#c";
 				this.setActiveTab(targetElement);
 			});	
 		}
@@ -39,6 +38,7 @@ class NavBar {
 		clickedTab.classList.add("tab-active");
 		this.activeTab = clickedTab;
 
+		let isBettingPage = false;
 		let postsData: PostData[] = [];
 		if (clickedTab === this.allTab) {
 			postsData = Posts.ALL;
@@ -48,9 +48,10 @@ class NavBar {
 			postsData = Posts.PLAYERS;
 		} else if (clickedTab === this.bettingTab) {
 			postsData = Posts.BETTING;
+			isBettingPage = true;
 		}
 		
-		this.postArea.setPostsData(postsData);
+		this.postArea.setPostsData(postsData, isBettingPage);
 		this.postArea.load();	
 	}	
 }
