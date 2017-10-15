@@ -50,7 +50,7 @@ var Posts = /** @class */ (function () {
     ];
     Posts.BETTING = [
         //{ filename: "b25-09-2017", tags: [""] },
-        { filename: "b14-10-2017", tags: [""] },
+        { filename: "b13-10-2017", tags: [""] },
         // New betting posts must go before this but after the next highest up one
         { filename: "broll", tags: [""] }
     ];
