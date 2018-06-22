@@ -25,7 +25,6 @@ var Posts = /** @class */ (function () {
         { filename: "27-08-2017", tags: ["chelsea", "everton", "tactical", "analysis", "gueye", "no-man", "land"] },
         { filename: "07-09-2017", tags: ["analysing", "centre", "backs", "part", "1", "front", "foot", "defending", "biggest", "misconception"] },
         { filename: "11-09-2017", tags: ["analysing", "centre", "backs", "part", "2", "ball", "playing", "risk", "vs", "reward"] },
-        { filename: "13-10-2017", tags: ["site", "changes", "betting", "players"] },
     ];
     Posts.WRITEUPS = [
         { filename: "03-01-2015", tags: ["underrated", "managers", "part", "1", "unai", "emery", "simplicity", "scouting"] },
@@ -49,9 +48,9 @@ var Posts = /** @class */ (function () {
         { filename: "25-08-2017", tags: ["ben", "gibson", "analysis", "england", "best", "central", "defender"] },
     ];
     Posts.BETTING = [
-        { filename: "b13-10-2017", tags: [""] },
-        { filename: "b20-10-2017", tags: [""] },
-        { filename: "b27-10-2017", tags: [""] },
+        //	{ filename: "b13-10-2017", tags: [""] },
+        //    { filename: "b20-10-2017", tags: [""] },
+        //    { filename: "b27-10-2017", tags: [""] },
         // New betting posts must go before this but after the next highest up one
         { filename: "broll", tags: [""] }
     ];
